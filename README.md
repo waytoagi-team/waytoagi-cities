@@ -2,6 +2,8 @@
 
 WaytoAGI 各城市的展示页，由各城市组织者自己开发维护。
 
+📖 **城市组织者请先读：[城市站组织者手册（飞书）](https://waytoagi.feishu.cn/docx/X005d8C78oliYZx1N7xc4wfOnNf)**
+
 - 城市集合主页：`https://cities.waytoagi.com/`
 - 城市详情页：`https://cities.waytoagi.com/<城市拼音>/`，例如 `https://cities.waytoagi.com/shanghai/`
 
