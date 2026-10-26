@@ -1,0 +1,42 @@
+name: 城市管理者申请
+description: 申请成为某个城市的城市站管理者
+title: "[管理者申请] 城市名"
+labels: ["管理者申请"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        这是公开仓库，**请不要在这里填写手机号、微信号等私人信息**。总部会通过社区渠道私下联系你核实身份。
+  - type: input
+    id: city
+    attributes:
+      label: 城市
+      placeholder: 例如：上海
+    validations:
+      required: true
+  - type: input
+    id: slug
+    attributes:
+      label: 城市拼音（目录名和网址路径）
+      placeholder: 例如：shanghai
+    validations:
+      required: true
+  - type: input
+    id: nickname
+    attributes:
+      label: WaytoAGI 社区昵称
+      placeholder: 你在社区群里使用的昵称
+    validations:
+      required: true
+  - type: input
+    id: events
+    attributes:
+      label: 活动平台主理人主页或你办过的活动链接（可选）
+      placeholder: 例如：https://events.waytoagi.com/...
+  - type: textarea
+    id: role
+    attributes:
+      label: 你在本城的角色
+      placeholder: 例如：上海站主理人，组织过 3 期线下活动
+    validations:
+      required: true
