@@ -4,8 +4,6 @@
 页面最终发布在 `https://cities.waytoagi.com/<slug>/`。
 动手前请先读完本文件。
 
-> 标「⚠️ 待定」的地方还在和总部技术负责人确认，以后会更新。
-
 ## 先确认三件事
 
 1. 用户是哪个城市？在 `cities.json` 里找到这个城市的 `slug`（例如 `shanghai`）。
@@ -24,7 +22,7 @@
 - **需要构建**：`cities/<slug>/package.json` 里有 `build` 脚本，
   构建产物输出到 `cities/<slug>/dist/`，并且 `dist/index.html` 存在。
 
-构建环境是 Node 22.11.0。包管理器不限，构建时按锁文件自动识别：有 `pnpm-lock.yaml` 用 pnpm，有 `yarn.lock` 用 yarn，有 `package-lock.json` 用 npm；没有锁文件构建会失败。pnpm、yarn 的版本按 `package.json` 的 `packageManager` 字段（如 `"pnpm@9.15.9"`），不写就用最新版，建议写上。目录里不能有符号链接。
+构建环境是 Node 22.23.4。包管理器不限，构建时按锁文件自动识别：有 `pnpm-lock.yaml` 用 pnpm，有 `yarn.lock` 用 yarn，有 `package-lock.json` 用 npm；没有锁文件构建会失败。pnpm、yarn 的版本按 `package.json` 的 `packageManager` 字段（如 `"pnpm@9.15.9"`），不写就用最新版，建议写上。目录里不能有符号链接。
 
 ## 路径前缀（最容易出错）
 
@@ -39,11 +37,17 @@
 
 ## 必须保留：总部页眉页脚
 
-每个 HTML 页面都要引入总部 kit，审核会检查，缺失就不通过。
-kit 会提供页眉、页脚、统计和登录按钮。
-不要自己再写一套全站导航，也不要隐藏或覆盖 kit 的元素。
+每个 HTML 页面的 `<head>` 里都要加这一行，构建时会检查，缺了构建直接失败：
 
-⚠️ 待定：kit 还在建设中，引入代码以 `kit/` 发布后的说明为准。在那之前，页面先不放页眉页脚。
+```html
+<script src="https://cities.waytoagi.com/kit/v1.js" defer></script>
+```
+
+- kit 会自动在页面最上方插入全站页眉、最下方插入全站页脚，样式和城市页面互相隔离。
+- 不要自己再写一套全站导航，也不要隐藏或覆盖 `<wta-header>`、`<wta-footer>`。
+- kit 会把 `body` 的外边距设为 0。不要给 `body` 设 `max-width` 或左右 `margin`，内容宽度放在自己的容器上（例如 `<main>`），否则页眉页脚会被一起挤窄。
+- 想控制位置时，可以在页面里自己放 `<wta-header></wta-header>`、`<wta-footer></wta-footer>`，kit 会填进去。
+- 统计和登录按钮还在建设中，以后加进 kit，页面不用改。
 
 ## 可用的总部组件（建设中）
 
