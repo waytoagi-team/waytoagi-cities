@@ -22,7 +22,7 @@
 - **需要构建**：`cities/<slug>/package.json` 里有 `build` 脚本，
   构建产物输出到 `cities/<slug>/dist/`，并且 `dist/index.html` 存在。
 
-构建环境是 Node 22.23.4。包管理器不限，构建时按锁文件自动识别：有 `pnpm-lock.yaml` 用 pnpm，有 `yarn.lock` 用 yarn，有 `package-lock.json` 用 npm；没有锁文件构建会失败。pnpm、yarn 的版本按 `package.json` 的 `packageManager` 字段（如 `"pnpm@9.15.9"`），不写就用最新版，建议写上。目录里不能有符号链接。
+构建环境是 Node 22.11.0（EdgeOne 预装的最高版本，填其他版本 EO 构建会直接失败）。Vite 7 起要求 Node 22.12 以上，所以用 Vite 6（`npm create vite@6`）；其他框架和工具也要选支持 Node 22.11.0 的版本。包管理器不限，构建时按锁文件自动识别：有 `pnpm-lock.yaml` 用 pnpm，有 `yarn.lock` 用 yarn，有 `package-lock.json` 用 npm；没有锁文件构建会失败。pnpm、yarn 的版本按 `package.json` 的 `packageManager` 字段（如 `"pnpm@9.15.9"`），不写就用最新版，建议写上。目录里不能有符号链接。
 
 ## 路径前缀（最容易出错）
 
