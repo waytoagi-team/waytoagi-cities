@@ -12,6 +12,8 @@ const COREPACK = join(ROOT, "node_modules", "corepack", "dist", "corepack.js");
 const SLUG = /^[a-z][a-z0-9-]*$/;
 // HTML 里以 / 开头的资源引用；挂在 /<slug>/ 下时，没带前缀的绝对路径会 404。
 const ABSOLUTE_REF = /\b(?:src|href|poster|action)\s*=\s*["'](\/(?!\/)[^"']*)["']/gi;
+// 总部页眉页脚（kit/），每个城市页面都必须引入。
+const KIT_SCRIPT = /<script\b[^>]*\bsrc\s*=\s*["'](?:https:\/\/cities\.waytoagi\.com)?\/kit\/v1\.js["']/i;
 
 function fail(message) {
   console.error(`\n构建失败：${message}`);
@@ -86,7 +88,7 @@ function checkAbsoluteRefs(slug, outDir) {
   const problems = [];
   for (const file of htmlFiles(outDir)) {
     for (const [, ref] of readFileSync(file, "utf8").matchAll(ABSOLUTE_REF)) {
-      if (ref === "/" || ref === `/${slug}` || ref.startsWith(`/${slug}/`)) continue;
+      if (ref === "/" || ref === `/${slug}` || ref.startsWith(`/${slug}/`) || ref.startsWith("/kit/")) continue;
       problems.push(`${relative(outDir, file)}: ${ref}`);
     }
   }
@@ -94,6 +96,17 @@ function checkAbsoluteRefs(slug, outDir) {
     fail(
       `${slug} 有 ${problems.length} 处以 / 开头、但不在 /${slug}/ 下的引用，上线后会 404。` +
         `请改成相对路径，或在框架里把 base 设为 /${slug}/（见 AGENTS.md）：\n  ${problems.slice(0, 10).join("\n  ")}`,
+    );
+  }
+}
+
+function checkKit(slug, outDir) {
+  const missing = htmlFiles(outDir).filter((file) => !KIT_SCRIPT.test(readFileSync(file, "utf8")));
+  if (missing.length > 0) {
+    fail(
+      `${slug} 有 ${missing.length} 个页面没有引入总部页眉页脚，请在 <head> 里加上（见 AGENTS.md）：\n` +
+        `  <script src="https://cities.waytoagi.com/kit/v1.js" defer></script>\n  ` +
+        missing.slice(0, 10).map((file) => relative(outDir, file)).join("\n  "),
     );
   }
 }
@@ -110,6 +123,7 @@ function buildCity(city) {
     fail(`${relative(ROOT, outDir)}/index.html 不存在` + (isPackage ? "（构建产物要输出到 dist/）" : ""));
   }
   checkAbsoluteRefs(city.slug, outDir);
+  checkKit(city.slug, outDir);
   cpSync(outDir, join(DIST, city.slug), {
     recursive: true,
     filter: (src) => !basename(src).startsWith(".") && basename(src) !== "node_modules",
@@ -128,17 +142,21 @@ function renderHome(cities) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>WaytoAGI 城市站</title>
+  <script src="./kit/v1.js" defer></script>
   <style>
-    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 48px auto; padding: 0 20px; line-height: 1.6; }
+    body { font-family: system-ui, sans-serif; line-height: 1.6; }
+    main { max-width: 720px; margin: 48px auto; padding: 0 20px; }
     ul { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
     a { display: block; padding: 12px 16px; border: 1px solid #ddd; border-radius: 8px; color: inherit; text-decoration: none; }
     a:hover { border-color: #888; }
   </style>
 </head>
 <body>
-  <h1>WaytoAGI 城市站</h1>
-  ${cities.length > 0 ? `<ul>\n${items}\n    </ul>` : "<p>城市站建设中，敬请期待。</p>"}
-  <p><a href="https://github.com/waytoagi-team/waytoagi-cities">想为你的城市建站？</a></p>
+  <main>
+    <h1>WaytoAGI 城市站</h1>
+    ${cities.length > 0 ? `<ul>\n${items}\n    </ul>` : "<p>城市站建设中，敬请期待。</p>"}
+    <p><a href="https://github.com/waytoagi-team/waytoagi-cities">想为你的城市建站？</a></p>
+  </main>
 </body>
 </html>
 `;
@@ -147,6 +165,7 @@ function renderHome(cities) {
 const enabled = loadCities().filter((city) => city.enabled);
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST);
+cpSync(join(ROOT, "kit"), join(DIST, "kit"), { recursive: true, filter: (src) => !basename(src).startsWith(".") });
 for (const city of enabled) buildCity(city);
 writeFileSync(join(DIST, "index.html"), renderHome(enabled));
 console.log(`\n✓ 构建完成：首页 + ${enabled.length} 个城市 → dist/`);

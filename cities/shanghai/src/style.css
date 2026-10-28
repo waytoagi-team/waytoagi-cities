@@ -1,7 +1,10 @@
 body {
   font-family: system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+main {
   max-width: 720px;
   margin: 48px auto;
   padding: 0 20px;
-  line-height: 1.6;
 }
