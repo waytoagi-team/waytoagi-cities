@@ -1,10 +1,220 @@
 body {
-  font-family: system-ui, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Source Han Sans SC", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  color: #151515;
   line-height: 1.6;
+  background: #fff;
 }
 
-main {
-  max-width: 720px;
-  margin: 48px auto;
+a {
+  color: inherit;
+}
+
+.container {
+  max-width: 1328px;
+  margin: 0 auto;
   padding: 0 20px;
+}
+
+.hero {
+  background: #efefef;
+  padding: 64px 0 48px;
+}
+
+.eyebrow {
+  display: inline-block;
+  margin: 0;
+  padding: 2px 8px;
+  background: #d4ff70;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.hero h1 {
+  margin: 16px 0 0;
+  font-size: 56px;
+  line-height: 1.1;
+}
+
+.lead {
+  margin: 16px 0 0;
+  max-width: 32em;
+  font-size: 18px;
+  color: #333;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1px solid #151515;
+  background: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn.primary {
+  background: #151515;
+  color: #fff;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 40px 0 0;
+  max-width: 800px;
+}
+
+.stats div {
+  border-top: 2px solid #151515;
+  padding-top: 12px;
+}
+
+.stats dt {
+  font-size: 14px;
+  color: #525252;
+}
+
+.stats dd {
+  margin: 4px 0 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.section {
+  padding-top: 56px;
+}
+
+.section h2 {
+  margin: 0 0 20px;
+  font-size: 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d5d5d5;
+  text-decoration: none;
+  transition: border-color 0.15s;
+}
+
+.card:hover {
+  border-color: #151515;
+}
+
+.cover {
+  aspect-ratio: 16 / 9;
+  background: #f7f7f7;
+  overflow: hidden;
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cover-empty {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  color: #5f5f5f;
+}
+
+.card .body {
+  padding: 16px;
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  color: #525252;
+}
+
+.kind {
+  background: #d4ff70;
+  color: #151515;
+  padding: 0 6px;
+  font-weight: 600;
+}
+
+.card h3 {
+  margin: 8px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.venue,
+.org {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: #525252;
+}
+
+.empty,
+.more,
+.note {
+  font-size: 15px;
+  color: #525252;
+}
+
+.more a,
+.empty a {
+  color: #151515;
+  font-weight: 600;
+}
+
+.note {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.todo {
+  border: 1px dashed #bdbdbd;
+  padding: 20px 24px;
+  color: #525252;
+}
+
+.todo p {
+  margin: 0;
+}
+
+.todo ul {
+  margin: 8px 0 12px;
+}
+
+.todo a {
+  color: #151515;
+  font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 40px 0 32px;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
 }
