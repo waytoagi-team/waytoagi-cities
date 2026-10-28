@@ -29,7 +29,10 @@
 
   const HEADER = `
     <style>${TOKENS}
-      :host { position: sticky; top: 0; z-index: 2147483000; background: #fff; border-bottom: 1px solid #d5d5d5; }
+      /* 顶条随页面滚走、页眉吸顶：整体 sticky，top 取负的顶条高度 */
+      :host { position: sticky; top: -36px; z-index: 2147483000; background: #fff; border-bottom: 1px solid #d5d5d5; }
+      .banner { display: block; height: 36px; line-height: 36px; background: #d4ff70; text-align: center; font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 12px; }
+      .banner:hover { opacity: 0.9; }
       .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 64px; }
       .brand { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
       .brand img { height: 56px; width: auto; display: block; }
@@ -40,9 +43,11 @@
       @media (max-width: 640px) {
         .brand img { height: 40px; }
         .tag { display: none; }
+        .banner { font-size: 12px; }
         nav a { padding: 6px 8px; font-size: 14px; }
       }
     </style>
+    <a class="banner" href="${LINKS.wiki}" target="_blank" rel="noopener">前往 WaytoAGI 飞书知识库 · 1 亿+ 次访问的开源 AI 知识库 →</a>
     <div class="wrap bar">
       <a class="brand" href="${LINKS.cities}" aria-label="WaytoAGI 城市站">
         <img src="${new URL("logo.svg", assetBase)}" alt="通往 AGI 之路 WaytoAGI" width="317" height="101">
