@@ -1,0 +1,18 @@
+# PR 构建检查：跑和 EdgeOne 相同的构建，失败日志在 PR 里就能看到。部署由 EdgeOne 连 Git 自动完成，这里不部署、不用任何密钥。
+name: Build check
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - run: npm ci
+      - run: npm run build

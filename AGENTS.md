@@ -11,7 +11,7 @@
 1. 用户是哪个城市？在 `cities.json` 里找到这个城市的 `slug`（例如 `shanghai`）。
    找不到就停下，提醒用户先申请成为城市管理者（见 README）。
 2. 你只能修改 `cities/<slug>/` 目录。其他文件和目录都不要动，
-   包括 `cities.json`、`kit/`、`home/`、`template/`、`.github/`、`README.md`、本文件。
+   包括 `cities.json`、`kit/`、`home/`、`template/`、`scripts/`、`.github/`、根目录的 `package.json` 和 `edgeone.json`、`README.md`、本文件。
 3. 目录还不存在时，有 `template/` 就复制它到 `cities/<slug>/` 作为起点，
    没有就按用户的意愿从零开始。
 
@@ -24,7 +24,7 @@
 - **需要构建**：`cities/<slug>/package.json` 里有 `build` 脚本，
   构建产物输出到 `cities/<slug>/dist/`，并且 `dist/index.html` 存在。
 
-⚠️ 待定：包管理器（建议 pnpm）、Node 版本。
+构建环境是 Node 22.11.0。包管理器不限，构建时按锁文件自动识别：有 `pnpm-lock.yaml` 用 pnpm，有 `yarn.lock` 用 yarn，有 `package-lock.json` 用 npm；没有锁文件构建会失败。pnpm、yarn 的版本按 `package.json` 的 `packageManager` 字段（如 `"pnpm@9.15.9"`），不写就用最新版，建议写上。目录里不能有符号链接。
 
 ## 路径前缀（最容易出错）
 
@@ -35,7 +35,7 @@
 - Astro：`astro.config` 里设 `base: '/<slug>'`。
 - Next.js：`output: 'export'` 加 `basePath: '/<slug>'`。
 
-⚠️ 待定：统一构建时是否由流水线自动注入前缀。
+流水线不会帮你加前缀。构建时会检查 HTML：以 `/` 开头、但不在 `/<slug>/` 下的引用会让构建直接失败。
 
 ## 必须保留：总部页眉页脚
 
@@ -67,5 +67,7 @@ kit 会提供页眉、页脚、统计和登录按钮。
 
 ## 提交后
 
+PR 上的「Build check」会用和线上相同的方式构建整站，失败时点进去看日志。
 审核 Agent 会把检查结果写在 PR 评论里（建设中）。
 没通过就按提示修改，再推送到同一个 PR。通过后自动合并，几分钟后上线。
+改了依赖或构建配置（`package.json`、锁文件、构建工具配置）的 PR 必须总部人工审核，不会自动合并。只改页面内容时尽量不要顺手升级依赖。

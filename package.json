@@ -1,0 +1,14 @@
+{
+  "name": "waytoagi-cities",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "dependencies": {
+    "corepack": "0.34.7"
+  }
+}
