@@ -7,5 +7,8 @@
   },
   "scripts": {
     "build": "node scripts/build.mjs"
+  },
+  "dependencies": {
+    "corepack": "0.34.7"
   }
 }

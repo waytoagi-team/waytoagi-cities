@@ -7,6 +7,8 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DIST = join(ROOT, "dist");
+// 用根目录 npm ci 装的固定版 corepack：EO 的 Node 22.11.0 自带 corepack 0.29.4，验不了 npm 新签名，下载 pnpm 会失败。
+const COREPACK = join(ROOT, "node_modules", "corepack", "dist", "corepack.js");
 const SLUG = /^[a-z][a-z0-9-]*$/;
 // HTML 里以 / 开头的资源引用；挂在 /<slug>/ 下时，没带前缀的绝对路径会 404。
 const ABSOLUTE_REF = /\b(?:src|href|poster|action)\s*=\s*["'](\/(?!\/)[^"']*)["']/gi;
@@ -36,21 +38,42 @@ function run(command, args, cwd) {
   execFileSync(command, args, { cwd, stdio: "inherit", env: { ...process.env, COREPACK_ENABLE_DOWNLOAD_PROMPT: "0" } });
 }
 
-// 按锁文件选包管理器，城市不必统一。
+function corepack(args, cwd) {
+  if (!existsSync(COREPACK)) fail("缺少 node_modules/corepack，请先在仓库根目录运行 npm ci");
+  run(process.execPath, [COREPACK, ...args], cwd);
+}
+
+// 按锁文件选包管理器，城市不必统一。锁文件必须有：没有的话每次构建都重新解析依赖，依赖发了新版本会不经 PR 直接上线。
 function buildPackage(dir) {
   const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf8"));
   if (!pkg.scripts?.build) fail(`${relative(ROOT, dir)}/package.json 缺少 build 脚本`);
   if (existsSync(join(dir, "pnpm-lock.yaml"))) {
-    run("corepack", ["pnpm", "install", "--frozen-lockfile"], dir);
-    run("corepack", ["pnpm", "run", "build"], dir);
+    corepack(["pnpm", "install", "--frozen-lockfile"], dir);
+    corepack(["pnpm", "run", "build"], dir);
   } else if (existsSync(join(dir, "yarn.lock"))) {
-    run("corepack", ["yarn", "install"], dir);
-    run("corepack", ["yarn", "run", "build"], dir);
-  } else {
-    run("npm", [existsSync(join(dir, "package-lock.json")) ? "ci" : "install"], dir);
+    corepack(["yarn", "install", "--frozen-lockfile"], dir);
+    corepack(["yarn", "run", "build"], dir);
+  } else if (existsSync(join(dir, "package-lock.json"))) {
+    run("npm", ["ci"], dir);
     run("npm", ["run", "build"], dir);
+  } else {
+    fail(`${relative(ROOT, dir)} 缺少锁文件，请把 package-lock.json、pnpm-lock.yaml 或 yarn.lock 一起提交`);
   }
   return join(dir, "dist");
+}
+
+// 符号链接会原样复制进 dist/，可能把构建机上城市目录以外的文件一起发布出去。
+function checkNoSymlinks(dir) {
+  const links = [];
+  const walk = (current) => {
+    for (const entry of readdirSync(current, { withFileTypes: true })) {
+      const path = join(current, entry.name);
+      if (entry.isSymbolicLink()) links.push(relative(ROOT, path));
+      else if (entry.isDirectory() && entry.name !== "node_modules") walk(path);
+    }
+  };
+  walk(dir);
+  if (links.length > 0) fail(`不能包含符号链接：\n  ${links.slice(0, 10).join("\n  ")}`);
 }
 
 function htmlFiles(dir) {
@@ -79,8 +102,10 @@ function buildCity(city) {
   const dir = join(ROOT, "cities", city.slug);
   if (!existsSync(dir)) fail(`cities.json 里启用了 ${city.slug}，但没有 cities/${city.slug}/ 目录`);
   console.log(`\n▶ ${city.slug}（${city.name}）`);
+  checkNoSymlinks(dir);
   const isPackage = existsSync(join(dir, "package.json"));
   const outDir = isPackage ? buildPackage(dir) : dir;
+  if (isPackage && existsSync(outDir)) checkNoSymlinks(outDir);
   if (!existsSync(join(outDir, "index.html"))) {
     fail(`${relative(ROOT, outDir)}/index.html 不存在` + (isPackage ? "（构建产物要输出到 dist/）" : ""));
   }
