@@ -33,6 +33,14 @@ const weekday = (d) => {
 };
 const coord = (lat, lng) => `N ${lat.toFixed(2)}° · E ${lng.toFixed(2)}°`;
 const eventUrl = (e) => `${EVENTS_SITE}/events/${encodeURIComponent(e.id)}`;
+// 活动平台有的封面是它自己的相对地址（/api/images/proxy?url=…），要补上活动平台域名，否则会请求到 cities.waytoagi.com。
+function coverUrl(cover) {
+  try {
+    return new URL(cover, EVENTS_SITE).href;
+  } catch {
+    return null;
+  }
+}
 
 // 地标线稿：照搬官网 components/CityLandmark.tsx 的上海线稿（160×100 画布、单线、新生绿太阳）。
 function waves(y, from = 8, to = 152, step = 12) {
@@ -68,7 +76,8 @@ function upcomingRow(e) {
 }
 
 function pastCard(e) {
-  const cover = e.cover ? `<img src="${escapeHtml(e.cover)}" alt="" loading="lazy">` : `<span>${kindLabel(e.eventKind)}</span>`;
+  const src = e.cover && coverUrl(e.cover);
+  const cover = src ? `<img src="${escapeHtml(src)}" alt="" loading="lazy">` : `<span>${kindLabel(e.eventKind)}</span>`;
   return `
     <a class="card" href="${eventUrl(e)}" target="_blank" rel="noopener">
       <div class="cover">${cover}</div>
@@ -82,8 +91,10 @@ function pastCard(e) {
 
 // 按当天日期区分近期和往期，不依赖快照里的状态（快照可能是几天前拉的）。
 const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Shanghai" });
-const upcoming = data.events.filter((e) => (e.endDate ?? e.date) >= today).sort((a, b) => a.date.localeCompare(b.date));
-const past = data.events.filter((e) => (e.endDate ?? e.date) < today).sort((a, b) => b.date.localeCompare(a.date));
+// 没有开始日期的活动不进列表：排序和日期显示都要用它，缺了整页会渲染失败。
+const dated = data.events.filter((e) => e.date);
+const upcoming = dated.filter((e) => (e.endDate ?? e.date) >= today).sort((a, b) => a.date.localeCompare(b.date));
+const past = dated.filter((e) => (e.endDate ?? e.date) < today).sort((a, b) => b.date.localeCompare(a.date));
 const hosted = data.events.filter((e) => /waytoagi/i.test(e.organizerName ?? "")).length;
 const snapshotDate = new Date(data.fetchedAt).toLocaleDateString("zh-CN", { timeZone: "Asia/Shanghai" });
 
