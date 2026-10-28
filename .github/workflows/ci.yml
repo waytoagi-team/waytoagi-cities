@@ -16,3 +16,5 @@ jobs:
           node-version-file: .nvmrc
       - run: npm ci
       - run: npm run build
+        env:
+          CHECK_ALL_CITIES: "1"

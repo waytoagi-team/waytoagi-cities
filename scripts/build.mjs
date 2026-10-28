@@ -1,7 +1,8 @@
 // 构建整站：按 cities.json 构建各城市页面，生成城市集合首页，全部输出到 dist/。
 // EdgeOne 合并 main 后执行 `npm run build`，PR 上的构建检查跑的也是同一个脚本。
 import { execFileSync } from "node:child_process";
-import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import { basename, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -111,7 +112,7 @@ function checkKit(slug, outDir) {
   }
 }
 
-function buildCity(city) {
+function buildCity(city, target) {
   const dir = join(ROOT, "cities", city.slug);
   if (!existsSync(dir)) fail(`cities.json 里启用了 ${city.slug}，但没有 cities/${city.slug}/ 目录`);
   console.log(`\n▶ ${city.slug}（${city.name}）`);
@@ -124,7 +125,7 @@ function buildCity(city) {
   }
   checkAbsoluteRefs(city.slug, outDir);
   checkKit(city.slug, outDir);
-  cpSync(outDir, join(DIST, city.slug), {
+  cpSync(outDir, target, {
     recursive: true,
     filter: (src) => !basename(src).startsWith(".") && basename(src) !== "node_modules",
   });
@@ -162,10 +163,27 @@ function renderHome(cities) {
 `;
 }
 
-const enabled = loadCities().filter((city) => city.enabled);
+// PR 检查（CHECK_ALL_CITIES=1）额外构建未上线但已有目录的城市，产物丢进临时目录、不进 dist/，
+// 新城市第一次提交时就能在 PR 上看到自己页面的构建结果。线上构建不设这个变量，只构建已上线的城市。
+function checkPendingCities(cities) {
+  const registered = new Set(cities.map((city) => city.slug));
+  const dirs = existsSync(join(ROOT, "cities")) ? readdirSync(join(ROOT, "cities"), { withFileTypes: true }) : [];
+  const unregistered = dirs.filter((d) => d.isDirectory() && !registered.has(d.name)).map((d) => d.name);
+  if (unregistered.length > 0) fail(`cities/ 下有未登记的城市目录：${unregistered.join("、")}（请先申请成为城市管理者，见 README）`);
+  const pending = cities.filter((city) => !city.enabled && existsSync(join(ROOT, "cities", city.slug)));
+  const scratch = mkdtempSync(join(tmpdir(), "cities-check-"));
+  // fail() 直接 process.exit，finally 不会执行，所以挂在 exit 上清理。
+  process.on("exit", () => rmSync(scratch, { recursive: true, force: true }));
+  for (const city of pending) buildCity(city, join(scratch, city.slug));
+  return pending.length;
+}
+
+const cities = loadCities();
+const enabled = cities.filter((city) => city.enabled);
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST);
 cpSync(join(ROOT, "kit"), join(DIST, "kit"), { recursive: true, filter: (src) => !basename(src).startsWith(".") });
-for (const city of enabled) buildCity(city);
+for (const city of enabled) buildCity(city, join(DIST, city.slug));
 writeFileSync(join(DIST, "index.html"), renderHome(enabled));
-console.log(`\n✓ 构建完成：首页 + ${enabled.length} 个城市 → dist/`);
+const checked = process.env.CHECK_ALL_CITIES === "1" ? checkPendingCities(cities) : 0;
+console.log(`\n✓ 构建完成：首页 + ${enabled.length} 个城市 → dist/` + (checked > 0 ? `；另检查了 ${checked} 个未上线城市` : ""));
