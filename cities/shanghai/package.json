@@ -1,0 +1,15 @@
+{
+  "name": "shanghai",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^8.3.5"
+  },
+  "packageManager": "pnpm@10.34.9"
+}
