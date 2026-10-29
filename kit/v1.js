@@ -1,4 +1,4 @@
-// WaytoAGI 城市站 kit v1：给页面插入全站统一的页眉和页脚，并接入全站统计（Umami + GA4）。
+// WaytoAGI 城市站 kit v1：给页面插入全站统一的页眉和页脚，接入全站统计（Umami + GA4），并提供本城活动（wta.events、<wta-events>）。
 // 用法（放在 <head> 里）：<script src="https://cities.waytoagi.com/kit/v1.js" defer></script>
 // 页眉页脚放在 Shadow DOM 里，和城市页面的样式互不影响。视觉 token 取自官网 waytoagi-web（themes.css）。
 (() => {
@@ -181,6 +181,178 @@
       </div>
     </div>
   `;
+
+  // ===== 本城活动：数据层 wta.events + 展示组件 <wta-events>（都可选，城市也可以自己调接口）=====
+  // 数据来自活动平台公开接口，它允许城市站跨域读取。这里统一处理几个坑：封面是活动平台的相对地址、
+  // 个别活动没有开始日期、近期 / 往期按北京时间划分、城市名用 cities.json 里的标准写法（eventsCity）。
+  const EVENTS_API = `${LINKS.events}/api/v1/events`;
+  const KIND = { hackathon: "黑客松", meetup: "线下聚会", conference: "大会", workshop: "工作坊", livestream: "直播" };
+  const WEEKDAY = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+  let citiesPromise;
+  const eventsCache = new Map();
+
+  const escapeHtml = (text) =>
+    String(text ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+  // 构建时生成的城市名册（slug、name、eventsCity），和 kit 一起发布
+  function loadCities() {
+    citiesPromise ??= fetch(new URL("cities.json", assetBase))
+      .then((res) => (res.ok ? res.json() : []))
+      .catch(() => []);
+    return citiesPromise;
+  }
+
+  async function currentCity() {
+    const city = (await loadCities()).find((c) => c.slug === cityTag);
+    if (!city) return null;
+    return { ...city, url: `${LINKS.events}/?city=${encodeURIComponent(city.eventsCity)}` };
+  }
+
+  function coverUrl(cover) {
+    if (!cover) return null;
+    try {
+      const url = new URL(cover, LINKS.events);
+      return url.protocol === "https:" || url.protocol === "http:" ? url.href : null;
+    } catch {
+      return null;
+    }
+  }
+
+  async function fetchCityEvents(eventsCity) {
+    const raw = [];
+    let cursor = "";
+    for (let page = 0; page < 20; page++) {
+      const url = new URL(EVENTS_API);
+      url.searchParams.set("city", eventsCity);
+      url.searchParams.set("limit", "50");
+      if (cursor) url.searchParams.set("cursor", cursor);
+      const res = await fetch(url, { credentials: "omit" });
+      if (!res.ok) throw new Error(`活动平台返回 ${res.status}`);
+      const body = await res.json();
+      raw.push(...(Array.isArray(body.items) ? body.items : []));
+      cursor = body.nextCursor ?? "";
+      if (!cursor) break;
+    }
+    return raw;
+  }
+
+  /** wta.events.list({ city?, view?: "all" | "upcoming" | "past", limit? })：返回整理好的活动数组 */
+  async function listEvents({ city, view = "all", limit } = {}) {
+    const eventsCity = city ?? (await currentCity())?.eventsCity;
+    if (!eventsCity) throw new Error(`cities.json 里没有当前城市（${cityTag}）`);
+    if (!eventsCache.has(eventsCity)) eventsCache.set(eventsCity, fetchCityEvents(eventsCity));
+    let raw;
+    try {
+      raw = await eventsCache.get(eventsCity);
+    } catch (error) {
+      eventsCache.delete(eventsCity);
+      throw error;
+    }
+    const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Shanghai" });
+    const events = raw
+      .filter((e) => typeof e.date === "string" && e.date)
+      .map((e) => ({
+        id: e.id,
+        title: e.title ?? "",
+        date: e.date,
+        endDate: e.endDate || null,
+        venue: e.venue || null,
+        organizer: e.organizerName || null,
+        kind: e.eventKind || null,
+        kindLabel: KIND[e.eventKind] ?? "活动",
+        online: e.eventMode === "online",
+        cover: coverUrl(e.cover),
+        url: `${LINKS.events}/events/${encodeURIComponent(e.id)}`,
+        upcoming: (e.endDate || e.date) >= today,
+      }));
+    const upcoming = events.filter((e) => e.upcoming).sort((a, b) => a.date.localeCompare(b.date));
+    const past = events.filter((e) => !e.upcoming).sort((a, b) => b.date.localeCompare(a.date));
+    const picked = view === "upcoming" ? upcoming : view === "past" ? past : [...upcoming, ...past];
+    return limit ? picked.slice(0, limit) : picked;
+  }
+
+  window.wta.events = { list: listEvents, city: currentCity };
+
+  const EVENTS_CSS = `
+    :host { color: #151515; }
+    h3 { margin: 0 0 12px; font-size: 20px; }
+    section + section { margin-top: 32px; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-variant-numeric: tabular-nums; }
+    .rows { list-style: none; margin: 0; padding: 0; border: 1px solid #d5d5d5; background: #fff; }
+    .rows li + li { border-top: 1px solid #d5d5d5; }
+    .row { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) auto; gap: 16px; align-items: center; padding: 14px 20px; }
+    .row:hover { background: #f7f7f7; }
+    .row:hover .t, .row:hover .arrow { color: #0032ff; }
+    .date b { display: block; font-size: 20px; line-height: 1; }
+    .date small { display: block; margin-top: 4px; font-size: 10px; letter-spacing: 0.08em; color: #525252; }
+    .t { display: block; font-weight: 600; }
+    .sub { display: block; margin-top: 2px; font-size: 12px; color: #525252; }
+    .arrow { color: #525252; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .card { display: flex; flex-direction: column; border: 1px solid #d5d5d5; background: #fff; }
+    .card:hover { border-color: #151515; }
+    .cover { aspect-ratio: 16 / 9; background: #e1e1e1; overflow: hidden; display: grid; place-items: center; color: #525252; }
+    .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .body { padding: 12px 14px 14px; }
+    .body .mono { font-size: 11px; color: #525252; }
+    .body b { display: block; margin-top: 4px; font-size: 15px; line-height: 1.5; }
+    .state, .more { margin: 12px 0 0; font-size: 14px; color: #525252; }
+    .state a, .more a { color: #0032ff; }
+    @media (max-width: 640px) { .row { grid-template-columns: 4.5rem minmax(0, 1fr); padding: 12px 16px; } .arrow { display: none; } }
+  `;
+
+  function eventRow(e) {
+    const range = e.endDate && e.endDate !== e.date ? ` → ${e.endDate.slice(5).replace("-", ".")}` : "";
+    const [y, m, d] = e.date.split("-").map(Number);
+    const sub = [e.kindLabel + (e.online ? " · 线上" : ""), e.organizer, e.venue].filter(Boolean).map(escapeHtml).join(" · ");
+    return `<li><a class="row" href="${escapeHtml(e.url)}" target="_blank" rel="noopener" data-id="${escapeHtml(e.id)}">
+      <span class="date mono"><b>${e.date.slice(5).replace("-", ".")}</b><small>${WEEKDAY[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]}${range}</small></span>
+      <span><span class="t">${escapeHtml(e.title)}</span><span class="sub">${sub}</span></span>
+      <span class="arrow" aria-hidden="true">↗</span></a></li>`;
+  }
+
+  function eventCard(e) {
+    const cover = e.cover ? `<img src="${escapeHtml(e.cover)}" alt="" loading="lazy">` : escapeHtml(e.kindLabel);
+    return `<a class="card" href="${escapeHtml(e.url)}" target="_blank" rel="noopener" data-id="${escapeHtml(e.id)}">
+      <span class="cover">${cover}</span>
+      <span class="body"><span class="mono">${e.date.replaceAll("-", ".")} · ${escapeHtml(e.kindLabel)}</span><b>${escapeHtml(e.title)}</b></span></a>`;
+  }
+
+  // <wta-events view="all|upcoming|past" limit="12" city="上海">：都不填时按当前城市显示近期 + 最近 12 场往期
+  customElements.define(
+    "wta-events",
+    class extends HTMLElement {
+      async connectedCallback() {
+        if (this.shadowRoot) return;
+        const root = this.attachShadow({ mode: "open" });
+        root.innerHTML = `<style>${TOKENS}${EVENTS_CSS}</style><p class="state">活动加载中…</p>`;
+        root.addEventListener("click", (event) => {
+          const link = event.target.closest?.("a[data-id]");
+          if (link) window.wta.track("event_click", { city: cityTag, id: link.dataset.id });
+        });
+        const view = this.getAttribute("view") || "all";
+        const limit = Number(this.getAttribute("limit")) || 12;
+        const city = this.getAttribute("city") || undefined;
+        const cityInfo = await currentCity();
+        const allUrl = city ? `${LINKS.events}/?city=${encodeURIComponent(city)}` : (cityInfo?.url ?? LINKS.events);
+        let html = "";
+        try {
+          if (view !== "past") {
+            const upcoming = await listEvents({ city, view: "upcoming" });
+            html += `<section><h3>近期活动</h3>${upcoming.length ? `<ol class="rows">${upcoming.map(eventRow).join("")}</ol>` : `<p class="state">暂时没有即将开始的活动。</p>`}</section>`;
+          }
+          if (view !== "upcoming") {
+            const past = await listEvents({ city, view: "past" });
+            html += `<section><h3>往期回顾</h3><div class="grid">${past.slice(0, limit).map(eventCard).join("")}</div></section>`;
+          }
+          html += `<p class="more"><a href="${escapeHtml(allUrl)}" target="_blank" rel="noopener">去活动平台看全部活动 ↗</a></p>`;
+        } catch {
+          html = `<p class="state">暂时无法加载活动，<a href="${escapeHtml(allUrl)}" target="_blank" rel="noopener">去活动平台查看 ↗</a></p>`;
+        }
+        root.innerHTML = `<style>${TOKENS}${EVENTS_CSS}</style>${html}`;
+      }
+    },
+  );
 
   function mount(tag, html, place) {
     const host = document.querySelector(tag) ?? document.createElement(tag);
