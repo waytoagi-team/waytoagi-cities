@@ -15,6 +15,19 @@
   const firstSegment = location.pathname.split("/")[1] ?? "";
   const cityTag = /^[a-z][a-z0-9-]*$/.test(firstSegment) ? firstSegment : "home";
 
+  // 上报的网址只保留推广渠道参数 utm_*，其他参数（可能带登录凭证、个人信息）一律去掉，# 也不上报。
+  const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
+  function keepUtmOnly(href) {
+    const url = new URL(href, location.origin);
+    const kept = new URLSearchParams();
+    for (const key of UTM_KEYS) {
+      const value = url.searchParams.get(key);
+      if (value) kept.set(key, value);
+    }
+    const query = kept.toString();
+    return `${url.pathname}${query ? `?${query}` : ""}`;
+  }
+
   // 城市自定义埋点：wta.track("事件名", { 可选数据 })。统计脚本还没加载完时先排队。
   const pending = [];
   window.wta = {
@@ -36,8 +49,8 @@
       window.dataLayer.push(arguments);
     };
     window.gtag("js", new Date());
-    // 和 Umami 一致：上报的网址不带参数和 #，来源只保留域名；content_group 按城市分组，GA 后台不用额外配置。
-    const config = { page_location: location.origin + location.pathname, content_group: cityTag };
+    // 和 Umami 一致：网址只带 utm_* 参数、不带 #，来源只保留域名；content_group 按城市分组，GA 后台不用额外配置。
+    const config = { page_location: location.origin + keepUtmOnly(location.href), content_group: cityTag };
     try {
       if (document.referrer) config.page_referrer = new URL(document.referrer).origin;
     } catch {
@@ -59,8 +72,17 @@
 
   function loadAnalytics() {
     if (document.querySelector(`script[src="${UMAMI.src}"]`)) return;
-    // 来源只保留域名，外站链接里的参数不进统计；本站网址的参数和 # 由 data-exclude-* 去掉。
+    // 来源只保留域名，外站链接里的参数不进统计；本站网址只保留 utm_* 参数，# 由 data-exclude-hash 去掉。
     window.__wtaBeforeSend = (type, payload) => {
+      if (payload?.url) {
+        try {
+          const absolute = /^https?:/i.test(payload.url);
+          const path = keepUtmOnly(payload.url);
+          payload.url = absolute ? new URL(payload.url).origin + path : path;
+        } catch {
+          payload.url = String(payload.url).split(/[?#]/)[0];
+        }
+      }
       if (payload?.referrer) {
         try {
           payload.referrer = new URL(payload.referrer).origin;
@@ -77,7 +99,6 @@
       websiteId: UMAMI.websiteId,
       domains: UMAMI.domains,
       tag: cityTag,
-      excludeSearch: "true",
       excludeHash: "true",
       beforeSend: "__wtaBeforeSend",
     });
