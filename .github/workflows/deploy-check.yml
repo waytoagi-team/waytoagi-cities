@@ -1,19 +1,25 @@
-# 每 15 分钟检查线上是否跟上 main，结果推到总部运维的 Uptime Kuma，告警发到飞书运维群。逻辑见 scripts/check-deploy.mjs。
+# 检查线上是否跟上 main，结果推到总部运维的 Uptime Kuma，告警发到飞书运维群。逻辑见 scripts/check-deploy.mjs。
+# 每次推送到 main 后运行：等 EdgeOne 部署，最多 20 分钟。定时运行只当心跳：GitHub 的定时任务在本组织实际几个小时才跑一次
+# （2026-10-29 实测，每小时的任务一天只跑约 4 次），所以 Kuma 的心跳间隔是 12 小时，及时发现构建失败靠推送触发。
 # 公开仓库 60 天没有提交时，GitHub 会自动停用定时任务；那时 Kuma 因为收不到心跳而告警，到 Actions 页面重新启用即可。
 name: Deploy check
 on:
+  push:
+    branches: [main]
   schedule:
     - cron: "7,22,37,52 * * * *"
   workflow_dispatch:
 permissions:
   contents: read
+# 新的一次运行会取消还在等部署的旧运行：只需要检查 main 的最新提交，新运行自己也会等满 20 分钟。
 concurrency:
   group: deploy-check
+  cancel-in-progress: true
 jobs:
   check:
     if: github.repository == 'waytoagi-team/waytoagi-cities'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with:
