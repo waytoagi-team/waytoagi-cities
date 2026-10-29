@@ -194,6 +194,15 @@ function checkPendingCities(cities) {
   return pending.length;
 }
 
+// 本次构建的提交：优先问 git；构建环境里没有 .git 时，退而用环境变量里的 40 位提交号。
+function currentCommit() {
+  try {
+    return execFileSync("git", ["rev-parse", "HEAD"], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+  } catch {
+    return Object.entries(process.env).find(([name, value]) => /COMMIT|SHA/i.test(name) && /^[0-9a-f]{40}$/i.test(value ?? ""))?.[1] ?? null;
+  }
+}
+
 const cities = loadCities();
 const enabled = cities.filter((city) => city.enabled);
 rmSync(DIST, { recursive: true, force: true });
@@ -201,5 +210,11 @@ mkdirSync(DIST);
 cpSync(join(ROOT, "kit"), join(DIST, "kit"), { recursive: true, filter: (src) => !basename(src).startsWith(".") });
 for (const city of enabled) buildCity(city, join(DIST, city.slug));
 writeFileSync(join(DIST, "index.html"), renderHome(enabled));
+// 线上版本号：定时检查（.github/workflows/deploy-check.yml）拿它和 main 比，EdgeOne 构建失败、线上停在旧版本时会告警。
+const commit = currentCommit();
+writeFileSync(join(DIST, "version.json"), JSON.stringify({ commit, builtAt: new Date().toISOString() }) + "\n");
 const checked = process.env.CHECK_ALL_CITIES === "1" ? checkPendingCities(cities) : 0;
-console.log(`\n✓ 构建完成：首页 + ${enabled.length} 个城市 → dist/` + (checked > 0 ? `；另检查了 ${checked} 个未上线城市` : ""));
+console.log(
+  `\n✓ 构建完成：首页 + ${enabled.length} 个城市 → dist/（提交 ${commit?.slice(0, 7) ?? "未知"}）` +
+    (checked > 0 ? `；另检查了 ${checked} 个未上线城市` : ""),
+);
