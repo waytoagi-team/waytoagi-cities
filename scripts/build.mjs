@@ -50,6 +50,23 @@ function corepack(args, cwd) {
 function buildPackage(dir) {
   const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf8"));
   if (!pkg.scripts?.build) fail(`${relative(ROOT, dir)}/package.json 缺少 build 脚本`);
+  try {
+    installAndBuild(dir);
+  } catch (error) {
+    // 子进程以非 0 退出时，报错已经打在上方日志里。没跑起来（例如找不到 npm）或被信号杀掉（例如内存不足）时
+    // status 是 null 而不是 undefined，日志里看不到原因，要把原始错误打出来。
+    const detail =
+      typeof error.status === "number" ? "" : `\n  原始错误：${error.message}${error.signal ? `（${error.signal}）` : ""}`;
+    fail(
+      `${relative(ROOT, dir)} 安装依赖或构建失败，具体报错见上方日志。${detail}\n` +
+        `  常见原因：依赖要求的 Node 版本高于构建环境的 Node ${process.versions.node}（由总部统一设置，城市不能改），` +
+        `例如报「Cannot find native binding」「Unsupported engine」。请换成支持这个版本的依赖。`,
+    );
+  }
+  return join(dir, "dist");
+}
+
+function installAndBuild(dir) {
   if (existsSync(join(dir, "pnpm-lock.yaml"))) {
     corepack(["pnpm", "install", "--frozen-lockfile"], dir);
     corepack(["pnpm", "run", "build"], dir);
@@ -62,7 +79,6 @@ function buildPackage(dir) {
   } else {
     fail(`${relative(ROOT, dir)} 缺少锁文件，请把 package-lock.json、pnpm-lock.yaml 或 yarn.lock 一起提交`);
   }
-  return join(dir, "dist");
 }
 
 // 符号链接会原样复制进 dist/，可能把构建机上城市目录以外的文件一起发布出去。
