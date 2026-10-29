@@ -53,8 +53,10 @@ function buildPackage(dir) {
   try {
     installAndBuild(dir);
   } catch (error) {
-    // 子进程跑起来后失败时，报错已经打在上方日志里；没跑起来（例如找不到 npm）时 status 为空，要把原始错误打出来。
-    const detail = error.status === undefined ? `\n  原始错误：${error.message}` : "";
+    // 子进程以非 0 退出时，报错已经打在上方日志里。没跑起来（例如找不到 npm）或被信号杀掉（例如内存不足）时
+    // status 是 null 而不是 undefined，日志里看不到原因，要把原始错误打出来。
+    const detail =
+      typeof error.status === "number" ? "" : `\n  原始错误：${error.message}${error.signal ? `（${error.signal}）` : ""}`;
     fail(
       `${relative(ROOT, dir)} 安装依赖或构建失败，具体报错见上方日志。${detail}\n` +
         `  常见原因：依赖要求的 Node 版本高于构建环境的 Node ${process.versions.node}（由总部统一设置，城市不能改），` +
