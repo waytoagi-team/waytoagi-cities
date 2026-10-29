@@ -8,6 +8,8 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DIST = join(ROOT, "dist");
+// 总部页面（如 /privacy/），原样复制到网站根目录。
+const HOME = join(ROOT, "home");
 // 用根目录 npm ci 装的固定版 corepack，不用 Node 自带的：自带版本随 Node 变（旧版验不了 npm 新签名，下载 pnpm 会失败；Node 25 起不再自带）。
 const COREPACK = join(ROOT, "node_modules", "corepack", "dist", "corepack.js");
 const SLUG = /^[a-z][a-z0-9-]*$/;
@@ -24,9 +26,12 @@ function fail(message) {
 function loadCities() {
   const { cities } = JSON.parse(readFileSync(join(ROOT, "cities.json"), "utf8"));
   if (!Array.isArray(cities)) fail("cities.json 缺少 cities 数组");
+  // 城市输出到 dist/<slug>/，和总部的目录同名会互相覆盖。
+  const reserved = new Set(["kit", ...(existsSync(HOME) ? readdirSync(HOME) : [])]);
   const seen = new Set();
   for (const city of cities) {
     if (!SLUG.test(city.slug ?? "")) fail(`城市 slug 不合法：${JSON.stringify(city.slug)}（只能用小写字母、数字和 -）`);
+    if (reserved.has(city.slug)) fail(`城市 slug 不能用 ${city.slug}：和总部的 /${city.slug}/ 重名`);
     if (seen.has(city.slug)) fail(`城市 slug 重复：${city.slug}`);
     seen.add(city.slug);
     if (typeof city.name !== "string" || !city.name) fail(`${city.slug} 缺少 name`);
@@ -147,6 +152,14 @@ function buildCity(city, target) {
   });
 }
 
+// 总部页面里留给负责人确认的地方写成「【待确认：…】」，没确认完不能上线。
+function copyHomePages() {
+  if (!existsSync(HOME)) return;
+  const pending = htmlFiles(HOME).filter((file) => readFileSync(file, "utf8").includes("【待确认"));
+  if (pending.length > 0) fail(`总部页面还有待确认的内容：\n  ${pending.map((file) => relative(ROOT, file)).join("\n  ")}`);
+  cpSync(HOME, DIST, { recursive: true, filter: (src) => !basename(src).startsWith(".") });
+}
+
 function escapeHtml(text) {
   return text.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 }
@@ -208,6 +221,7 @@ const enabled = cities.filter((city) => city.enabled);
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST);
 cpSync(join(ROOT, "kit"), join(DIST, "kit"), { recursive: true, filter: (src) => !basename(src).startsWith(".") });
+copyHomePages();
 for (const city of enabled) buildCity(city, join(DIST, city.slug));
 writeFileSync(join(DIST, "index.html"), renderHome(enabled));
 // 线上版本号：定时检查（.github/workflows/deploy-check.yml）拿它和 main 比，EdgeOne 构建失败、线上停在旧版本时会告警。

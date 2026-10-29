@@ -94,6 +94,7 @@
     wiki: "https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e",
     home: "https://www.waytoagi.com",
     repo: "https://github.com/waytoagi-team/waytoagi-cities",
+    privacy: "https://cities.waytoagi.com/privacy/",
   };
   const NAV = [
     { label: "城市站", href: LINKS.cities },
@@ -173,7 +174,7 @@
     </div>
     <div class="legal">
       <div class="wrap">
-        <span>© ${new Date().getFullYear()} 通往 AGI 之路</span>
+        <span>© ${new Date().getFullYear()} 通往 AGI 之路 · <a href="${LINKS.privacy}">隐私政策</a></span>
         <span class="beian">
           <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">浙ICP备2023022291号-2</a>
           <a href="https://beian.mps.gov.cn/" target="_blank" rel="noopener">浙公网安备33011002017528</a>

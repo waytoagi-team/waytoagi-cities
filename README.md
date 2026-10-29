@@ -16,7 +16,7 @@ WaytoAGI 各城市的展示页，由各城市组织者自己开发维护。
 3. 合并到 `main` 后，EdgeOne 自动构建并部署整站。PR 上会先跑一遍同样的构建检查（`npm run build`）。
    整站一起构建：只要一个城市构建失败，所有城市和总部 kit 的更新都上不了线，线上保持上一版。EdgeOne 构建失败在 GitHub 上看不到，所以总部每 15 分钟比对一次线上的 `/version.json` 和 `main`（`deploy-check` 工作流），`main` 更新超过 20 分钟线上还没跟上，就会向总部运维告警。
 
-技术栈不限：原生 HTML、React、Vue、Astro 等都可以。页眉页脚、统计、登录由总部统一提供。
+技术栈不限：原生 HTML、React、Vue、Astro 等都可以。页眉页脚、统计、隐私说明（`/privacy/`，源文件在 `home/`）、登录由总部统一提供。
 
 ## 城市组织者上手
 
