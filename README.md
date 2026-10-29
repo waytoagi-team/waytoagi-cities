@@ -44,7 +44,7 @@ WaytoAGI 各城市的展示页，由各城市组织者自己开发维护。
 
 ## 活动怎么出现在城市页上
 
-在活动平台 [events.waytoagi.com](https://events.waytoagi.com) 发布活动，城市名按 `cities.json` 里的标准写法填写（例如「郑州」，不要写「郑州市」）。城市页的活动组件会自动显示（建设中）。
+在活动平台 [events.waytoagi.com](https://events.waytoagi.com) 发布活动，城市名按 `cities.json` 里的标准写法填写（例如「郑州」，不要写「郑州市」）。页面上加一行 `<wta-events></wta-events>` 就会自动显示本城活动；也可以用 kit 的 `wta.events.list()` 只取数据、自己设计样式，或者自己调活动平台接口。详见 [`AGENTS.md`](./AGENTS.md)「本城活动」。
 
 ## 素材规范
 

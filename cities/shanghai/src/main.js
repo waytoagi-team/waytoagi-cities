@@ -1,8 +1,7 @@
 import "./style.css";
-import data from "./events.json";
 
-const EVENTS_SITE = "https://events.waytoagi.com";
-const CITY_EVENTS = `${EVENTS_SITE}/?city=${encodeURIComponent(data.city)}`;
+// 活动数据实时来自活动平台，通过 kit 的数据层 window.wta.events 取（封面、日期、城市名都已处理好），
+// 展示样式由本城自己决定。这是「数据由总部提供、样式城市自定」的样例写法。
 const PAST_LIMIT = 12;
 
 // 城市资料取自官网公开数据：admin.waytoagi.com/api/public/cities（坐标、区域、亮点）
@@ -17,30 +16,20 @@ const CITY = {
   symbols: ["外滩", "石库门", "海派"],
   highlight: "AI 切磋大会 · AGI Bar",
 };
+const CITY_EVENTS = `https://events.waytoagi.com/?city=${encodeURIComponent(CITY.name)}`;
 
-const KIND = { hackathon: "黑客松", meetup: "线下聚会", conference: "大会", workshop: "工作坊", livestream: "直播" };
 const WEEKDAY = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 function escapeHtml(text) {
   return String(text ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 }
 
-const kindLabel = (k) => KIND[k] ?? "活动";
 const mmdd = (d) => d.slice(5).replace("-", ".");
 const weekday = (d) => {
   const [y, m, day] = d.split("-").map(Number);
   return WEEKDAY[new Date(Date.UTC(y, m - 1, day)).getUTCDay()];
 };
 const coord = (lat, lng) => `N ${lat.toFixed(2)}° · E ${lng.toFixed(2)}°`;
-const eventUrl = (e) => `${EVENTS_SITE}/events/${encodeURIComponent(e.id)}`;
-// 活动平台有的封面是它自己的相对地址（/api/images/proxy?url=…），要补上活动平台域名，否则会请求到 cities.waytoagi.com。
-function coverUrl(cover) {
-  try {
-    return new URL(cover, EVENTS_SITE).href;
-  } catch {
-    return null;
-  }
-}
 
 // 地标线稿：照搬官网 components/CityLandmark.tsx 的上海线稿（160×100 画布、单线、新生绿太阳）。
 function waves(y, from = 8, to = 152, step = 12) {
@@ -65,38 +54,28 @@ const ticks = '<i class="tick tl"></i><i class="tick tr"></i><i class="tick bl">
 function upcomingRow(e) {
   const range = e.endDate && e.endDate !== e.date ? ` → ${mmdd(e.endDate)}` : "";
   return `
-    <li><a class="row" href="${eventUrl(e)}" target="_blank" rel="noopener">
+    <li><a class="row" href="${escapeHtml(e.url)}" target="_blank" rel="noopener" data-id="${escapeHtml(e.id)}">
       <span class="date"><b>${mmdd(e.date)}</b><small>${weekday(e.date)}${range}</small></span>
       <span class="row-main">
         <span class="row-title">${escapeHtml(e.title)}</span>
-        <span class="row-sub">${kindLabel(e.eventKind)}${e.organizerName ? ` · ${escapeHtml(e.organizerName)}` : ""}${e.venue ? ` · ${escapeHtml(e.venue)}` : ""}</span>
+        <span class="row-sub">${escapeHtml(e.kindLabel)}${e.organizer ? ` · ${escapeHtml(e.organizer)}` : ""}${e.venue ? ` · ${escapeHtml(e.venue)}` : ""}</span>
       </span>
       <span class="arrow" aria-hidden="true">↗</span>
     </a></li>`;
 }
 
 function pastCard(e) {
-  const src = e.cover && coverUrl(e.cover);
-  const cover = src ? `<img src="${escapeHtml(src)}" alt="" loading="lazy">` : `<span>${kindLabel(e.eventKind)}</span>`;
+  const cover = e.cover ? `<img src="${escapeHtml(e.cover)}" alt="" loading="lazy">` : `<span>${escapeHtml(e.kindLabel)}</span>`;
   return `
-    <a class="card" href="${eventUrl(e)}" target="_blank" rel="noopener">
+    <a class="card" href="${escapeHtml(e.url)}" target="_blank" rel="noopener" data-id="${escapeHtml(e.id)}">
       <div class="cover">${cover}</div>
       <div class="card-body">
-        <div class="mono">${e.date.replaceAll("-", ".")} · ${kindLabel(e.eventKind)}</div>
+        <div class="mono">${e.date.replaceAll("-", ".")} · ${escapeHtml(e.kindLabel)}</div>
         <h3>${escapeHtml(e.title)}</h3>
-        ${e.organizerName ? `<p>${escapeHtml(e.organizerName)}</p>` : ""}
+        ${e.organizer ? `<p>${escapeHtml(e.organizer)}</p>` : ""}
       </div>
     </a>`;
 }
-
-// 按当天日期区分近期和往期，不依赖快照里的状态（快照可能是几天前拉的）。
-const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Asia/Shanghai" });
-// 没有开始日期的活动不进列表：排序和日期显示都要用它，缺了整页会渲染失败。
-const dated = data.events.filter((e) => e.date);
-const upcoming = dated.filter((e) => (e.endDate ?? e.date) >= today).sort((a, b) => a.date.localeCompare(b.date));
-const past = dated.filter((e) => (e.endDate ?? e.date) < today).sort((a, b) => b.date.localeCompare(a.date));
-const hosted = data.events.filter((e) => /waytoagi/i.test(e.organizerName ?? "")).length;
-const snapshotDate = new Date(data.fetchedAt).toLocaleDateString("zh-CN", { timeZone: "Asia/Shanghai" });
 
 document.querySelector("#app").innerHTML = `
   <aside class="sample-notice" role="note">
@@ -134,9 +113,9 @@ document.querySelector("#app").innerHTML = `
 
   <div class="container">
     <dl class="stats">
-      <div><dt>活动平台收录的上海活动</dt><dd class="mono">${data.events.length}<small>场</small></dd></div>
-      <div><dt>即将开始</dt><dd class="mono">${upcoming.length}<small>场</small></dd></div>
-      <div><dt>WaytoAGI 主办或联合主办</dt><dd class="mono">${hosted}<small>场</small></dd></div>
+      <div><dt>活动平台收录的上海活动</dt><dd class="mono"><span data-stat="total">—</span><small>场</small></dd></div>
+      <div><dt>即将开始</dt><dd class="mono"><span data-stat="upcoming">—</span><small>场</small></dd></div>
+      <div><dt>WaytoAGI 主办或联合主办</dt><dd class="mono"><span data-stat="hosted">—</span><small>场</small></dd></div>
     </dl>
 
     <section class="panel" id="upcoming">
@@ -145,22 +124,19 @@ document.querySelector("#app").innerHTML = `
           <span class="next-stop mono">NEXT STOP</span>
           <h2>接下来，在上海见</h2>
         </div>
-        <span class="mono muted">${upcoming.length} EVENTS</span>
+        <span class="mono muted" data-stat="upcoming-events"></span>
       </header>
-      ${upcoming.length > 0
-        ? `<ol class="rows">${upcoming.map(upcomingRow).join("")}</ol>`
-        : `<p class="empty">暂时没有即将开始的活动。</p>`}
+      <div id="upcoming-list"><p class="empty">活动加载中…</p></div>
       <footer class="panel-foot"><a href="${CITY_EVENTS}" target="_blank" rel="noopener">去活动站看上海全部活动 ↗</a></footer>
     </section>
 
     <section class="section">
       <div class="section-head">
         <h2>往期回顾</h2>
-        <span class="mono muted">${past.length} EVENTS</span>
+        <span class="mono muted" data-stat="past-events"></span>
       </div>
-      <div class="grid">${past.slice(0, PAST_LIMIT).map(pastCard).join("")}</div>
-      ${past.length > PAST_LIMIT ? `<p class="more"><a href="${CITY_EVENTS}" target="_blank" rel="noopener">查看全部 ${past.length} 场往期活动 ↗</a></p>` : ""}
-      <p class="note">活动数据来自 WaytoAGI 活动平台，更新于 ${snapshotDate}。</p>
+      <div id="past-list"></div>
+      <p class="note">活动数据实时来自 WaytoAGI 活动平台。</p>
     </section>
 
     <section class="section">
@@ -178,3 +154,37 @@ document.querySelector("#app").innerHTML = `
     </section>
   </div>
 `;
+
+const app = document.querySelector("#app");
+const setText = (key, text) => app.querySelectorAll(`[data-stat="${key}"]`).forEach((el) => (el.textContent = text));
+
+// 点活动时上报，和 kit 组件同一个事件名，方便各城市对比
+app.addEventListener("click", (event) => {
+  const link = event.target.closest("a[data-id]");
+  if (link) window.wta?.track("event_click", { city: "shanghai", id: link.dataset.id });
+});
+
+async function loadEvents() {
+  const events = await window.wta.events.list();
+  const upcoming = events.filter((e) => e.upcoming);
+  const past = events.filter((e) => !e.upcoming);
+  setText("total", String(events.length));
+  setText("upcoming", String(upcoming.length));
+  setText("hosted", String(events.filter((e) => /waytoagi/i.test(e.organizer ?? "")).length));
+  setText("upcoming-events", `${upcoming.length} EVENTS`);
+  setText("past-events", `${past.length} EVENTS`);
+  app.querySelector("#upcoming-list").innerHTML = upcoming.length
+    ? `<ol class="rows">${upcoming.map(upcomingRow).join("")}</ol>`
+    : `<p class="empty">暂时没有即将开始的活动。</p>`;
+  app.querySelector("#past-list").innerHTML =
+    `<div class="grid">${past.slice(0, PAST_LIMIT).map(pastCard).join("")}</div>` +
+    (past.length > PAST_LIMIT
+      ? `<p class="more"><a href="${CITY_EVENTS}" target="_blank" rel="noopener">查看全部 ${past.length} 场往期活动 ↗</a></p>`
+      : "");
+}
+
+loadEvents().catch(() => {
+  const fallback = `<p class="empty">暂时无法加载活动，<a href="${CITY_EVENTS}" target="_blank" rel="noopener">去活动平台查看 ↗</a></p>`;
+  app.querySelector("#upcoming-list").innerHTML = fallback;
+  app.querySelector("#past-list").innerHTML = "";
+});

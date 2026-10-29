@@ -51,9 +51,31 @@
 - 想统计页面上的某个操作（例如点了报名、看了二维码），调用 `window.wta?.track("事件名", { 可选数据 })`（同时发给 Umami 和 GA），事件名用英文小写加下划线，例如 `signup_click`；数据里不要放手机号、姓名等个人信息。
 - 登录按钮还在建设中，以后加进 kit，页面不用改。
 
-## 可用的总部组件（建设中）
+## 本城活动（可选，三种方式任选）
 
-- 本城活动列表：传入 `cities.json` 里该城市的 `eventsCity`（如「上海」）。
+活动数据来自 WaytoAGI 活动平台，城市在活动平台发布后就会出现。kit 提供两种用法，城市也可以自己调接口：
+
+1. **直接放组件**（最省事）：在页面里加 `<wta-events></wta-events>`，自动显示本城近期活动和往期回顾。
+   可选属性：`view="upcoming|past|all"`（默认 all）、`limit="12"`（往期最多几张）、`city="上海"`（不填按当前城市）。
+   样式由总部统一，和页面样式互相隔离。
+2. **只取数据、自己设计样式**（推荐想自定义的城市用）：
+   ```js
+   const events = await window.wta.events.list({ view: "upcoming" }); // view: all | upcoming | past，可加 limit
+   ```
+   每条活动的字段：`id`、`title`、`date`、`endDate`、`venue`、`organizer`、`kindLabel`（黑客松 / 大会…）、`online`、`cover`（已是完整地址）、`url`（活动详情页）、`upcoming`（按北京时间判断）。
+   `window.wta.events.city()` 返回当前城市的 `name`、`eventsCity` 和活动平台上的本城列表地址 `url`。
+   上海样例站（`cities/shanghai/src/main.js`）就是这种写法。
+3. **自己调接口**：`https://events.waytoagi.com/api/v1/events?city=<eventsCity>`（只返回已发布活动，用 `nextCursor` 翻页）。要自己处理这几个坑：
+   - 有的封面是活动平台的相对地址（`/api/images/proxy?...`），要补上 `https://events.waytoagi.com`；
+   - 个别活动没有 `date`，要先过滤掉，否则排序会报错；
+   - 近期 / 往期按北京时间划分；
+   - 城市名用 `cities.json` 里的 `eventsCity`，不要自己写。
+
+注意：活动平台只允许正式域名（和以后登记的本地开发地址）跨域读取。本地开发时如果拉不到数据，页面应该显示「去活动平台查看」之类的兜底，不能整页空白。
+想统计活动点击，用 `window.wta?.track("event_click", { city: "<slug>", id })`，组件已经自带。
+
+## 其他总部组件（建设中）
+
 - 登录按钮、「关注本城」按钮：由 kit 提供，不要自己接登录。
 
 ## 禁止事项
