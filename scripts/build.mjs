@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = fileURLToPath(new URL("..", import.meta.url));
 const DIST = join(ROOT, "dist");
-// 用根目录 npm ci 装的固定版 corepack：EO 的 Node 22.11.0 自带 corepack 0.29.4，验不了 npm 新签名，下载 pnpm 会失败。
+// 用根目录 npm ci 装的固定版 corepack，不用 Node 自带的：自带版本随 Node 变（旧版验不了 npm 新签名，下载 pnpm 会失败；Node 25 起不再自带）。
 const COREPACK = join(ROOT, "node_modules", "corepack", "dist", "corepack.js");
 const SLUG = /^[a-z][a-z0-9-]*$/;
 // HTML 里以 / 开头的资源引用；挂在 /<slug>/ 下时，没带前缀的绝对路径会 404。

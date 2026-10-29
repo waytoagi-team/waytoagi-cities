@@ -3,12 +3,12 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22"
+    "node": ">=24.18.0"
   },
   "scripts": {
     "build": "node scripts/build.mjs"
   },
   "dependencies": {
-    "corepack": "0.34.7"
+    "corepack": "0.36.0"
   }
 }
