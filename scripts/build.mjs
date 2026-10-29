@@ -47,9 +47,37 @@ function corepack(args, cwd) {
 }
 
 // 按锁文件选包管理器，城市不必统一。锁文件必须有：没有的话每次构建都重新解析依赖，依赖发了新版本会不经 PR 直接上线。
+// EO 只能用预装的 Node 22.11.0（edgeone.json），Vite 7 起要求 Node 22.12+，装上也构建不了，
+// 报错是看不懂的「Cannot find native binding」，所以提前拦下并说清楚。
+function checkViteVersion(dir, pkg) {
+  const spec = pkg.dependencies?.vite ?? pkg.devDependencies?.vite;
+  const major = Number(/^\D*(\d+)/.exec(spec ?? "")?.[1]);
+  if (major >= 7) {
+    fail(
+      `${relative(ROOT, dir)} 用的是 Vite ${major}（"vite": "${spec}"），它要求 Node 22.12 以上，` +
+        `而构建环境只能用 EdgeOne 预装的 Node ${process.versions.node}。\n` +
+        `  请改用 Vite 6：把 package.json 里的 vite 改成 "^6.4.5" 后重新安装依赖、提交新的锁文件；新建项目用 npm create vite@6。`,
+    );
+  }
+}
+
 function buildPackage(dir) {
   const pkg = JSON.parse(readFileSync(join(dir, "package.json"), "utf8"));
   if (!pkg.scripts?.build) fail(`${relative(ROOT, dir)}/package.json 缺少 build 脚本`);
+  checkViteVersion(dir, pkg);
+  try {
+    installAndBuild(dir);
+  } catch {
+    fail(
+      `${relative(ROOT, dir)} 安装依赖或构建失败，具体报错见上方日志。\n` +
+        `  常见原因：依赖要求的 Node 版本高于构建环境的 Node ${process.versions.node}（EdgeOne 限制，不能升级），` +
+        `例如报「Cannot find native binding」「Unsupported engine」。请换成支持这个版本的依赖。`,
+    );
+  }
+  return join(dir, "dist");
+}
+
+function installAndBuild(dir) {
   if (existsSync(join(dir, "pnpm-lock.yaml"))) {
     corepack(["pnpm", "install", "--frozen-lockfile"], dir);
     corepack(["pnpm", "run", "build"], dir);
@@ -62,7 +90,6 @@ function buildPackage(dir) {
   } else {
     fail(`${relative(ROOT, dir)} 缺少锁文件，请把 package-lock.json、pnpm-lock.yaml 或 yarn.lock 一起提交`);
   }
-  return join(dir, "dist");
 }
 
 // 符号链接会原样复制进 dist/，可能把构建机上城市目录以外的文件一起发布出去。
