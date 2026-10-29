@@ -36,8 +36,13 @@
       window.dataLayer.push(arguments);
     };
     window.gtag("js", new Date());
-    // 和 Umami 一致：上报的网址不带参数和 #；content_group 按城市分组，GA 后台不用额外配置。
+    // 和 Umami 一致：上报的网址不带参数和 #，来源只保留域名；content_group 按城市分组，GA 后台不用额外配置。
     const config = { page_location: location.origin + location.pathname, content_group: cityTag };
+    try {
+      if (document.referrer) config.page_referrer = new URL(document.referrer).origin;
+    } catch {
+      // 来源解析不了就不传，GA 用它自己的默认值
+    }
     for (const id of GA_IDS) window.gtag("config", id, config);
     const insert = () => {
       const script = document.createElement("script");
