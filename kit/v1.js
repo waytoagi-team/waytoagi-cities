@@ -1,4 +1,4 @@
-// WaytoAGI 城市站 kit v1：给页面插入全站统一的页眉和页脚，并接入全站统计（Umami）。
+// WaytoAGI 城市站 kit v1：给页面插入全站统一的页眉和页脚，并接入全站统计（Umami + GA4）。
 // 用法（放在 <head> 里）：<script src="https://cities.waytoagi.com/kit/v1.js" defer></script>
 // 页眉页脚放在 Shadow DOM 里，和城市页面的样式互不影响。视觉 token 取自官网 waytoagi-web（themes.css）。
 (() => {
@@ -19,10 +19,38 @@
   const pending = [];
   window.wta = {
     track(name, data) {
+      window.gtag?.("event", name, data);
       if (window.umami) window.umami.track(name, data);
       else pending.push([name, data]);
     },
   };
+
+  // GA4：两个衡量 ID 共用一份 gtag.js。gtag.js 在境内经常很慢，提前插入会拖住页面 load，
+  // 而 Umami 要等 load 完成才发 pageview，所以等 load 之后再插入；只在正式域名加载。GA 会写 _ga Cookie。
+  const GA_IDS = ["G-861F9YGB8L", "G-X2EXEE4LZW"];
+
+  function setupGA() {
+    if (location.hostname !== UMAMI.domains || window.gtag) return;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function gtag() {
+      window.dataLayer.push(arguments);
+    };
+    window.gtag("js", new Date());
+    // 和 Umami 一致：上报的网址不带参数和 #；content_group 按城市分组，GA 后台不用额外配置。
+    const config = { page_location: location.origin + location.pathname, content_group: cityTag };
+    for (const id of GA_IDS) window.gtag("config", id, config);
+    const insert = () => {
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_IDS[0]}`;
+      document.head.append(script);
+    };
+    if (document.readyState === "complete") insert();
+    else window.addEventListener("load", insert, { once: true });
+  }
+
+  // 不等 body：先建好 gtag 队列，kit 初始化前调用的 wta.track 也能进 GA；gtag.js 本身仍等 load 之后插入。
+  setupGA();
 
   function loadAnalytics() {
     if (document.querySelector(`script[src="${UMAMI.src}"]`)) return;
