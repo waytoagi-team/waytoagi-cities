@@ -7,7 +7,7 @@ WaytoAGI 各城市的展示页，由各城市组织者自己开发维护。
 - 城市集合主页：`https://cities.waytoagi.com/`
 - 城市详情页：`https://cities.waytoagi.com/<城市拼音>/`，例如 `https://cities.waytoagi.com/shanghai/`
 
-> 项目刚起步：总部页眉页脚（`kit/v1.js`）已提供；统计、登录、起步模板（`template/`）和审核 Agent 还在建设中，下文标注「建设中」的部分以后会补齐。城市集合首页由构建脚本按 `cities.json` 自动生成。
+> 项目刚起步：总部页眉页脚和访问统计（`kit/v1.js`）已提供；登录、起步模板（`template/`）和审核 Agent 还在建设中，下文标注「建设中」的部分以后会补齐。城市集合首页由构建脚本按 `cities.json` 自动生成。
 
 ## 怎么运作
 
