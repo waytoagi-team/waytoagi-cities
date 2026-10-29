@@ -1,9 +1,58 @@
-// WaytoAGI 城市站 kit v1：给页面插入全站统一的页眉和页脚。
+// WaytoAGI 城市站 kit v1：给页面插入全站统一的页眉和页脚，并接入全站统计（Umami）。
 // 用法（放在 <head> 里）：<script src="https://cities.waytoagi.com/kit/v1.js" defer></script>
 // 页眉页脚放在 Shadow DOM 里，和城市页面的样式互不影响。视觉 token 取自官网 waytoagi-web（themes.css）。
 (() => {
   if (window.__wtaKit) return;
   window.__wtaKit = { version: 1 };
+
+  // 全站统计：WaytoAGI 自托管 Umami（infra apps/umami），cities.waytoagi.com 一个站点，
+  // 按路径第一段打城市标签（data-tag），本地开发和预览不上报（data-domains）。
+  const UMAMI = {
+    src: "https://a.waytoagi.com/script.js",
+    websiteId: "34b08736-94d7-4e7e-bfc8-65a3bc90a926",
+    domains: "cities.waytoagi.com",
+  };
+  const firstSegment = location.pathname.split("/")[1] ?? "";
+  const cityTag = /^[a-z][a-z0-9-]*$/.test(firstSegment) ? firstSegment : "home";
+
+  // 城市自定义埋点：wta.track("事件名", { 可选数据 })。统计脚本还没加载完时先排队。
+  const pending = [];
+  window.wta = {
+    track(name, data) {
+      if (window.umami) window.umami.track(name, data);
+      else pending.push([name, data]);
+    },
+  };
+
+  function loadAnalytics() {
+    if (document.querySelector(`script[src="${UMAMI.src}"]`)) return;
+    // 来源只保留域名，外站链接里的参数不进统计；本站网址的参数和 # 由 data-exclude-* 去掉。
+    window.__wtaBeforeSend = (type, payload) => {
+      if (payload?.referrer) {
+        try {
+          payload.referrer = new URL(payload.referrer).origin;
+        } catch {
+          payload.referrer = "";
+        }
+      }
+      return payload;
+    };
+    const script = document.createElement("script");
+    script.defer = true;
+    script.src = UMAMI.src;
+    Object.assign(script.dataset, {
+      websiteId: UMAMI.websiteId,
+      domains: UMAMI.domains,
+      tag: cityTag,
+      excludeSearch: "true",
+      excludeHash: "true",
+      beforeSend: "__wtaBeforeSend",
+    });
+    script.addEventListener("load", () => {
+      for (const [name, data] of pending.splice(0)) window.umami?.track(name, data);
+    });
+    document.head.append(script);
+  }
 
   const assetBase = new URL(".", document.currentScript?.src ?? location.href);
   const LINKS = {
@@ -111,6 +160,7 @@
     document.head.insertAdjacentHTML("beforeend", "<style>body{margin:0}</style>");
     mount("wta-header", HEADER, (host) => document.body.prepend(host));
     mount("wta-footer", FOOTER, (host) => document.body.append(host));
+    loadAnalytics();
   }
 
   if (document.body) init();
