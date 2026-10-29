@@ -221,6 +221,11 @@ const enabled = cities.filter((city) => city.enabled);
 rmSync(DIST, { recursive: true, force: true });
 mkdirSync(DIST);
 cpSync(join(ROOT, "kit"), join(DIST, "kit"), { recursive: true, filter: (src) => !basename(src).startsWith(".") });
+// kit 的本城活动按路径查城市标准名（eventsCity），名册只放公开字段
+writeFileSync(
+  join(DIST, "kit", "cities.json"),
+  `${JSON.stringify(cities.map(({ slug, name, eventsCity }) => ({ slug, name, eventsCity: eventsCity ?? name })))}\n`,
+);
 copyHomePages();
 for (const city of enabled) buildCity(city, join(DIST, city.slug));
 writeFileSync(join(DIST, "index.html"), renderHome(enabled));
