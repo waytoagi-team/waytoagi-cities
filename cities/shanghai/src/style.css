@@ -47,6 +47,46 @@ a:hover {
   color: var(--gray-500);
 }
 
+/* 样例提示：墨色整条，和 kit 的新生绿顶条区分开，避免被当成正式站点 */
+.sample-notice {
+  background: var(--ink);
+  color: #fff;
+}
+
+.sample-notice .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+}
+
+.sample-tag {
+  background: var(--highlight);
+  color: var(--ink);
+  padding: 2px 8px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.sample-notice p {
+  flex: 1 1 320px;
+  margin: 0;
+  font-size: 15px;
+}
+
+.sample-notice b {
+  color: var(--highlight);
+}
+
+.sample-notice a {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+}
+
 /* 首屏 */
 .hero {
   background: var(--surface);
