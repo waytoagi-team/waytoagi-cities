@@ -99,6 +99,14 @@ const hosted = data.events.filter((e) => /waytoagi/i.test(e.organizerName ?? "")
 const snapshotDate = new Date(data.fetchedAt).toLocaleDateString("zh-CN", { timeZone: "Asia/Shanghai" });
 
 document.querySelector("#app").innerHTML = `
+  <aside class="sample-notice" role="note">
+    <div class="container">
+      <span class="sample-tag mono">样例</span>
+      <p>这是城市站的<b>样例页面</b>，用来演示城市站的结构和做法，<b>不是上海的正式站点</b>。正式内容由上海组织者建设中。</p>
+      <a href="https://github.com/waytoagi-team/waytoagi-cities" target="_blank" rel="noopener">申请成为上海站管理者 ↗</a>
+    </div>
+  </aside>
+
   <section class="hero">
     <div class="container hero-grid">
       <div>
