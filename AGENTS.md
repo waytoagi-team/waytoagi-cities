@@ -1,5 +1,7 @@
 # AGENTS.md — WaytoAGI 城市站开发说明
 
+> **现阶段暂不开放城市自建页面**：城市页统一由总部生成，修改总部页面请改 `hq-site/`（说明见 `hq-site/README.md`），运行 `python3 hq-site/scripts/build.py` 重新生成 `hq/` 后一起提交。以下城市自建说明先保留备查。
+
 你正在帮一位 WaytoAGI 城市组织者开发他们城市的页面。
 页面最终发布在 `https://cities.waytoagi.com/<slug>/`。
 动手前请先读完本文件。

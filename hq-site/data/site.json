@@ -1,0 +1,20 @@
+{
+  "_说明": "站点级配置。表单链接留空时按钮显示「开通中」。forms_public：飞书表单改为「互联网上获得链接的人可填写」后改成 true，按钮下会提示「无需登录」。",
+  "site_name": "WaytoAGI 城市站",
+  "base_url": "https://cities.waytoagi.com",
+  "rules_version": "试行版 · 2026 年 11 月",
+  "forms": {
+    "organizer_apply": "https://waytoagi.feishu.cn/share/base/shrcnmnSw2TcSattSyG0KsmasUg",
+    "city_signup": "https://waytoagi.feishu.cn/share/base/shrcnDCvoVE1CViXqstcWCIdgHg",
+    "event_report": "https://waytoagi.feishu.cn/share/base/shrcnRT8YkCIMBBJcOdezdRS1Oh",
+    "event_result": "https://waytoagi.feishu.cn/share/base/shrcni6nciIFab7g76Rcw6fo3Bg"
+  },
+  "links": {
+    "home": "https://www.waytoagi.com/zh",
+    "events": "https://events.waytoagi.com",
+    "wiki": "https://waytoagi.feishu.cn/wiki/QPe5w5g7UisbEkkow8XcDmOpn8e",
+    "privacy": "https://cities.waytoagi.com/privacy/"
+  },
+  "contact": "城市运营",
+  "forms_public": true
+}
