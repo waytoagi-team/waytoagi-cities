@@ -149,7 +149,7 @@ def honor_card(o, c, r, idx, big=False, link=False, numbered=True):
         art_inner = f'<span class="hc-mono" aria-hidden="true">{e(initial(o["name"]))}</span>'
     badge = f'<span class="hc-badge">{e(o["badge"])}</span>' if o.get('badge') else ''
     name = f'<a href="{r}{c["slug"]}/index.html#{pid}">{e(o["name"])}</a>' if link else e(o['name'])
-    ident = f'<p class="hc-city">WaytoAGI {e(city)}</p><div class="hc-tags"><span class="hc-role">★ {role}</span>{badge}</div><h3 class="hc-name">{name}</h3>'
+    ident = f'<p class="hc-city">WaytoAGI {e(city)}</p><div class="hc-tags"><span class="hc-role">{role}</span>{badge}</div><h3 class="hc-name">{name}</h3>'
     team = f'<p class="hc-team">WaytoAGI {e(city)} · {e(o["team"])}</p>' if o.get('team') else ''
     partner = f'<p class="hc-team">合作伙伴：{e(o["partner"])}</p>' if o.get('partner') else ''
     motto = f'<blockquote class="hc-motto">{e(o["motto"])}</blockquote>' if o.get('motto') else ''
