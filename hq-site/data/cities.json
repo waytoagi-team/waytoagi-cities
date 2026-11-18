@@ -1,5 +1,5 @@
 {
-  "_说明": "城市站运营配置。改这里后运行 python3 scripts/build.py 重新生成。group_qr 填 assets/qr/ 下的图片文件名；organizers 只填已正式公示的组织者，格式 {\"name\": \"称呼\", \"team\": \"团队名（可选）\", \"partner\": \"合作伙伴（可选）\", \"since\": \"成为组织者的年月 YYYY-MM（可选）\", \"honors\": [\"荣誉，如 1024 超能 Coding 周末（可选）\"]}；host 填本城主理人称呼（须在 organizers 中）。 组织者还可填 record（战绩：event 活动名、checkins 到场、works 作品、volunteers 志愿者、joint 联合会场说明）、motto（一句话，本人提供）、portrait（人物形象：assets/people/ 下的图片文件名，竖版 4:5，jpg/png/webp，2MB 内，本人创作或有权使用，经审核后使用；旧字段 avatar 兼容）、badge（如「首批主理人」）。",
+  "_说明": "城市站运营配置。改这里后运行 python3 scripts/build.py 重新生成。group_qr 填 assets/qr/ 下的图片文件名；organizers 只填已正式公示的组织者，格式 {\"name\": \"称呼\", \"team\": \"团队名（可选）\", \"partner\": \"合作伙伴（可选）\", \"since\": \"成为组织者的年月 YYYY-MM（可选）\", \"honors\": [\"荣誉，如 1024 超能 Coding 周末（可选）\"]}；host 填本城主理人称呼（须在 organizers 中）。 组织者还可填 record（战绩：event 活动名、checkins 到场、works 作品、volunteers 志愿者、joint 联合会场说明）、motto（一句话，本人提供）、portrait（人物形象：assets/people/ 下的图片文件名，竖版 4:5，jpg/png/webp，2MB 内，本人创作或有权使用，经审核后使用；旧字段 avatar 兼容）、badge（如「首批主理人」）。 history 为往期全国切磋大会参与记录（count 期数、first 首次年月、editions 期次），由 城市运营/往期数据/ 脚本从知识库抽取。",
   "cities": [
     {
       "name": "金华",
@@ -21,7 +21,19 @@
       "organizers": [
         {
           "name": "王贝",
-          "badge": "首批主理人"
+          "badge": "首批主理人",
+          "history": {
+            "count": 4,
+            "first": "2025-12",
+            "editions": [
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          },
+          "since": "2025-12"
         }
       ],
       "host": "王贝"
@@ -36,7 +48,7 @@
       "organizers": [
         {
           "name": "冉伟",
-          "since": "2026-10",
+          "since": "2025-09",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -45,7 +57,24 @@
             "volunteers": 10
           },
           "motto": "",
-          "badge": "首批主理人"
+          "badge": "首批主理人",
+          "history": {
+            "count": 10,
+            "first": "2025-09",
+            "editions": [
+              "第17期",
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": "冉伟"
@@ -60,7 +89,7 @@
       "organizers": [
         {
           "name": "赦林",
-          "since": "2026-10",
+          "since": "2026-07",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -68,7 +97,16 @@
             "works": 5,
             "volunteers": 15
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 2,
+            "first": "2026-07",
+            "editions": [
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -91,7 +129,15 @@
             "works": 10,
             "volunteers": 7
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -115,7 +161,15 @@
             "volunteers": 2
           },
           "motto": "",
-          "badge": "首批主理人"
+          "badge": "首批主理人",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": "杜宇航"
@@ -130,14 +184,29 @@
       "organizers": [
         {
           "name": "冰鱼仔",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
             "checkins": 56,
             "works": 9
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 8,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第21期",
+              "第22期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -160,7 +229,15 @@
             "works": 6,
             "volunteers": 3
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -175,7 +252,7 @@
       "organizers": [
         {
           "name": "刘俊",
-          "since": "2026-10",
+          "since": "2026-06",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -183,7 +260,16 @@
             "works": 9,
             "volunteers": 10
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 2,
+            "first": "2026-06",
+            "editions": [
+              "第25期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -198,7 +284,7 @@
       "organizers": [
         {
           "name": "刘洋",
-          "since": "2026-10",
+          "since": "2025-11",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -206,7 +292,21 @@
             "works": 5,
             "volunteers": 5
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-11",
+            "editions": [
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "第25期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -221,7 +321,7 @@
       "organizers": [
         {
           "name": "张羽昊",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -229,7 +329,21 @@
             "works": 1,
             "volunteers": 1
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -244,7 +358,7 @@
       "organizers": [
         {
           "name": "高雁",
-          "since": "2026-10",
+          "since": "2025-09",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -253,7 +367,21 @@
             "volunteers": 8
           },
           "motto": "",
-          "badge": "首批主理人"
+          "badge": "首批主理人",
+          "history": {
+            "count": 7,
+            "first": "2025-09",
+            "editions": [
+              "第17期",
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": "高雁"
@@ -268,7 +396,7 @@
       "organizers": [
         {
           "name": "夜游榊",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -276,7 +404,20 @@
             "works": 6,
             "volunteers": 1
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -299,7 +440,15 @@
             "works": 10,
             "volunteers": 15
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -322,7 +471,15 @@
             "works": 9,
             "volunteers": 10
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -337,7 +494,7 @@
       "organizers": [
         {
           "name": "Ecfa（马丽清）",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -345,7 +502,24 @@
             "works": 4,
             "volunteers": 25
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 10,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -368,7 +542,15 @@
             "works": 6,
             "volunteers": 9
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -390,7 +572,15 @@
             "checkins": 25,
             "works": 6
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -405,7 +595,7 @@
       "organizers": [
         {
           "name": "晓飞",
-          "since": "2026-10",
+          "since": "2026-03",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -413,7 +603,16 @@
             "works": 9,
             "volunteers": 12
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 2,
+            "first": "2026-03",
+            "editions": [
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -436,7 +635,15 @@
             "works": 3,
             "volunteers": 2
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -459,7 +666,15 @@
             "works": 1,
             "volunteers": 10
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -484,7 +699,7 @@
       "organizers": [
         {
           "name": "Aiven Yi（易海）",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -492,7 +707,21 @@
             "works": 6,
             "volunteers": 18
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第23期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -507,14 +736,28 @@
       "organizers": [
         {
           "name": "茹九儿",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
             "checkins": 0,
             "works": 2
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第22期",
+              "第23期",
+              "第24期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -559,7 +802,7 @@
       "organizers": [
         {
           "name": "田志伟",
-          "since": "2026-10",
+          "since": "2026-03",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -567,7 +810,20 @@
             "works": 2,
             "volunteers": 6
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2026-03",
+            "editions": [
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -582,14 +838,27 @@
       "organizers": [
         {
           "name": "黄业博（ETC）",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
             "checkins": 0
           },
           "motto": "",
-          "badge": "首批主理人"
+          "badge": "首批主理人",
+          "history": {
+            "count": 6,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": "黄业博（ETC）"
@@ -611,7 +880,15 @@
             "checkins": 0,
             "volunteers": 4
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -636,13 +913,27 @@
       "organizers": [
         {
           "name": "江明超",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
             "checkins": 0
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -657,7 +948,7 @@
       "organizers": [
         {
           "name": "詹国勇（心一）",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -665,7 +956,20 @@
             "works": 2,
             "volunteers": 8
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -690,7 +994,7 @@
       "organizers": [
         {
           "name": "朴圣堃",
-          "since": "2026-10",
+          "since": "2026-01",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -698,7 +1002,21 @@
             "works": 4,
             "volunteers": 10
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2026-01",
+            "editions": [
+              "第21期",
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -713,14 +1031,25 @@
       "organizers": [
         {
           "name": "EchoBai",
-          "since": "2026-10",
+          "since": "2026-05",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
             "checkins": 33,
             "volunteers": 9
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 4,
+            "first": "2026-05",
+            "editions": [
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -735,7 +1064,7 @@
       "organizers": [
         {
           "name": "蔡乐",
-          "since": "2026-10",
+          "since": "2025-10",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -743,7 +1072,16 @@
             "works": 1,
             "volunteers": 4
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 2,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -758,7 +1096,7 @@
       "organizers": [
         {
           "name": "熊大赵军",
-          "since": "2026-10",
+          "since": "2026-01",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -766,7 +1104,20 @@
             "works": 3,
             "volunteers": 7
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2026-01",
+            "editions": [
+              "第21期",
+              "第22期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -796,7 +1147,15 @@
           "record": {
             "event": "1024 超能 Coding 周末"
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -819,7 +1178,15 @@
             "works": 6,
             "volunteers": 7
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -841,7 +1208,15 @@
             "checkins": 0,
             "works": 5
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -856,7 +1231,7 @@
       "organizers": [
         {
           "name": "手工编码师",
-          "since": "2026-10",
+          "since": "2026-03",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -864,7 +1239,20 @@
             "works": 2,
             "volunteers": 4
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2026-03",
+            "editions": [
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -909,7 +1297,7 @@
       "organizers": [
         {
           "name": "枫子",
-          "since": "2026-10",
+          "since": "2025-12",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -917,7 +1305,21 @@
             "works": 6,
             "volunteers": 10
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-12",
+            "editions": [
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -979,7 +1381,15 @@
             "checkins": 0,
             "volunteers": 19
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -1001,7 +1411,15 @@
             "checkins": 46,
             "works": 3
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -1016,7 +1434,7 @@
       "organizers": [
         {
           "name": "宫莉",
-          "since": "2026-10",
+          "since": "2025-12",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
@@ -1024,7 +1442,18 @@
             "works": 8,
             "volunteers": 7
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 4,
+            "first": "2025-12",
+            "editions": [
+              "第20期",
+              "第21期",
+              "第25期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -1049,7 +1478,15 @@
             "joint": "广州、佛山联合会场"
           },
           "motto": "",
-          "badge": "首批主理人"
+          "badge": "首批主理人",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": "吴斯斯"
@@ -1091,7 +1528,15 @@
             "checkins": 1,
             "works": 2
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -1116,13 +1561,23 @@
       "organizers": [
         {
           "name": "李超杰",
-          "since": "2026-10",
+          "since": "2026-06",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
             "checkins": 0
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 3,
+            "first": "2026-06",
+            "editions": [
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -1177,13 +1632,24 @@
       "organizers": [
         {
           "name": "Jacky Ma",
-          "since": "2026-10",
+          "since": "2026-05",
           "honors": [],
           "record": {
             "event": "1024 超能 Coding 周末",
             "volunteers": 1
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 4,
+            "first": "2026-05",
+            "editions": [
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -1236,7 +1702,15 @@
             "works": 2,
             "volunteers": 4
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""
@@ -1279,7 +1753,15 @@
             "works": 2,
             "volunteers": 6
           },
-          "motto": ""
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
         }
       ],
       "host": ""

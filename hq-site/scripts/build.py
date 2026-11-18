@@ -155,6 +155,9 @@ def honor_card(o, c, r, idx, big=False, link=False, numbered=True):
     motto = f'<blockquote class="hc-motto">{e(o["motto"])}</blockquote>' if o.get('motto') else ''
     duty = f'统筹{e(city)}本城活动排期和城市群，参与商业合作派发' if is_host else f'在{e(city)}办 AI 活动，带动本城社区'
     honors = ''.join(f'<span>{e(h)}</span>' for h in o.get('honors') or [])
+    hist = o.get('history') or {}
+    hist_html = (f'<p class="hc-hist"><b>{hist["count"]}</b><span>期全国切磋大会</span><em>首次 {e(hist["first"].replace("-", "."))}</em></p>'
+                 if hist.get('count') else '')
     since = o.get('since', '')
     foot = f'城市{role} · 自 {e(since.replace("-", "."))} 起' if since else f'WaytoAGI {e(city)} {role}'
     go = f'<a class="hc-go" href="{r}{c["slug"]}/index.html">进入城市页 →</a>' if link else ''
@@ -165,7 +168,7 @@ def honor_card(o, c, r, idx, big=False, link=False, numbered=True):
   <div class="hc-art">{art_inner}<span class="hc-sheen" aria-hidden="true"></span>{over}</div>
   <div class="hc-info">
     {head}{team}{partner}{motto}
-    <p class="hc-duty">{duty}</p>
+    {hist_html}<p class="hc-duty">{duty}</p>
     {f'<div class="hc-honors">{honors}</div>' if honors else ''}
     <div class="hc-foot"><span>{foot}</span>{go}</div>
   </div>
@@ -266,7 +269,7 @@ def page_people():
     stats = [(len(names), '位城市组织者'), (nhost, '位首批主理人'), (len({c['name'] for c, _, _ in ppl}), '座城市')]
     groups = ''
     for reg in REGIONS:
-        items = [(c, o) for c, o, h in ppl if c['region'] == reg and not h]
+        items = sorted([(c, o) for c, o, h in ppl if c['region'] == reg and not h], key=lambda x: -((x[1].get('history') or {}).get('count') or 0))
         if items:
             groups += f'<section class="region" data-region-block="{e(reg)}"><h2>{e(reg)}<span>{len(items)}</span></h2><div class="honor">' + ''.join(honor_card(o, c, r, i + 1, link=True, numbered=False) for i, (c, o) in enumerate(items)) + '</div></section>'
     hosts = [(c, o) for c, o, h in ppl if h]

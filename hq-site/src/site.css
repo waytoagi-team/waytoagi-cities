@@ -371,3 +371,9 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .pic-note-ico { display: grid; place-items: center; flex: none; width: 36px; height: 36px; border-radius: 12px; background: var(--primary); color: var(--hl); font-size: 18px; }
 .pic-note h2 { font-size: 16px; }
 .pic-note p { margin-top: 4px; font-size: 14px; color: var(--ink-2); }
+.hc-hist { display: flex; align-items: baseline; gap: 6px; margin: 0; padding: 10px 12px; border-radius: 14px; background: var(--chip); }
+.hc-hist b { font-size: 26px; line-height: 1; font-weight: 800; font-variant-numeric: tabular-nums; }
+.hc-hist span { font-size: 13px; font-weight: 600; }
+.hc-hist em { margin-left: auto; font-style: normal; font-size: 12px; color: var(--sub); }
+.hcard.xl .hc-hist b { font-size: 34px; }
+@media (max-width: 640px) { .hc-hist { flex-wrap: wrap; padding: 8px 10px; } .hc-hist b { font-size: 20px; } .hc-hist em { margin-left: 0; width: 100%; } }
