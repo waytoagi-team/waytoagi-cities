@@ -22,7 +22,7 @@ WaytoAGI 各城市的展示页，由各城市组织者自己开发维护。
 
 ### 1. 申请成为城市管理者
 
-在本仓库 [新建 issue](../../issues/new/choose)，选择「城市管理者申请」。总部核实身份后，会把你登记进城市名册 `cities.json`。
+填写 [城市组织者申请表（飞书）](https://waytoagi.feishu.cn/share/base/shrcnmnSw2TcSattSyG0KsmasUg)。总部审核后会私下联系你，核实通过再登记进城市名册 `cities.json`。不要在本仓库的 issue 里提交申请或填写个人信息。
 
 ### 2. 开发你的页面
 
