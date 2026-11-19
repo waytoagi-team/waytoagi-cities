@@ -12,8 +12,12 @@
     websiteId: "34b08736-94d7-4e7e-bfc8-65a3bc90a926",
     domains: "cities.waytoagi.com",
   };
+  // <script src=".../kit/v1.js" data-chrome="none">：只接统计和本城活动，不插页眉页脚（城市站总部页有自己的导航）。
+  const CHROME = document.currentScript?.dataset.chrome !== "none";
   const firstSegment = location.pathname.split("/")[1] ?? "";
-  const cityTag = /^[a-z][a-z0-9-]*$/.test(firstSegment) ? firstSegment : "home";
+  // 总部页（全部城市、组织者、规则、加入、隐私）不是城市，统计归到 home。
+  const HQ_SEGMENTS = new Set(["all", "organizers", "rules", "join", "privacy", "assets", "kit"]);
+  const cityTag = /^[a-z][a-z0-9-]*$/.test(firstSegment) && !HQ_SEGMENTS.has(firstSegment) ? firstSegment : "home";
 
   // 上报的网址只保留推广渠道参数 utm_*，其他参数（可能带登录凭证、个人信息）一律去掉，# 也不上报。
   const UTM_KEYS = ["utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content"];
@@ -384,9 +388,11 @@
 
   function init() {
     // 去掉浏览器默认的 body 外边距，页眉页脚才能贴边；城市自己的内容宽度请放在自己的容器上。
-    document.head.insertAdjacentHTML("beforeend", "<style>body{margin:0}</style>");
-    mount("wta-header", HEADER, (host) => document.body.prepend(host));
-    mount("wta-footer", FOOTER, (host) => document.body.append(host));
+    if (CHROME) {
+      document.head.insertAdjacentHTML("beforeend", "<style>body{margin:0}</style>");
+      mount("wta-header", HEADER, (host) => document.body.prepend(host));
+      mount("wta-footer", FOOTER, (host) => document.body.append(host));
+    }
     loadAnalytics();
   }
 

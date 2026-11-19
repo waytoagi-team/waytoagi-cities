@@ -13,10 +13,11 @@
       ev.preventDefault();
       var q = norm(form.querySelector('input').value);
       if (!q) { msg.textContent = '先输入城市名。'; return; }
-      var slug = map[q];
+      var own = function (k) { return Object.prototype.hasOwnProperty.call(map, k); };
+      var slug = own(q) ? map[q] : '';
       if (!slug) {
         var hit = Object.keys(map).find(function (k) { return k.indexOf(q) === 0 || q.indexOf(k) === 0; });
-        slug = hit && map[hit];
+        slug = hit ? map[hit] : '';
       }
       if (slug) { location.href = root + slug + '/index.html'; return; }
       msg.innerHTML = '';
@@ -72,6 +73,10 @@
       var lv = 'A';
       boxes.forEach(function (b) { if (b.checked && order.indexOf(b.dataset.level) > order.indexOf(lv)) lv = b.dataset.level; });
       var d = L[lv];
+      var levels = order.split('').filter(function (x) { return x === 'A' ? false : Array.from(boxes).some(function (b) { return b.checked && b.dataset.level === x; }); });
+      if (!levels.length) levels = ['A'];
+      var pre = [];
+      levels.forEach(function (x) { L[x][1].split('；').forEach(function (t) { if (t && pre.indexOf(t) < 0) pre.push(t); }); });
       var selected = function (value) { return Array.from(boxes).some(function (box) { return box.checked && box.value === value; }); };
       var materials = ['活动链接、签到人数；3 天内交获准使用的照片链接'];
       if (selected('sponsor')) materials.push('取得赞助时，提交对应收支明细');
@@ -82,7 +87,7 @@
       var badge = document.createElement('span'); badge.className = 'lv big ' + lv.toLowerCase(); badge.textContent = lv;
       var h = document.createElement('h3'); h.textContent = lv + ' 级 · ' + d[0];
       var dl = document.createElement('dl');
-      [['事前', d[1]], ['谁确认', d[2]]].forEach(function (p) {
+      [['事前', pre.join('；')], ['谁确认', d[2]]].forEach(function (p) {
         var dt = document.createElement('dt'); dt.textContent = p[0];
         var dd = document.createElement('dd'); dd.textContent = p[1];
         dl.append(dt, dd);

@@ -14,6 +14,19 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      # 城市站总部页：重新生成 hq/，和提交的内容不一致就失败（防止改了 hq-site/ 忘记重新生成）
+      - name: Check hq/ is up to date
+        run: |
+          python3 hq-site/scripts/build.py
+          python3 hq-site/scripts/check_dist.py
+          if [ -n "$(git status --porcelain -- hq)" ]; then
+            echo "::error::hq/ 与 hq-site/ 源码不一致，请运行 python3 hq-site/scripts/build.py 后一起提交"
+            git status --porcelain -- hq | head -20
+            exit 1
+          fi
       - run: npm ci
       - run: npm run build
         env:

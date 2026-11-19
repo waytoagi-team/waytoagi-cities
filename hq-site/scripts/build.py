@@ -7,6 +7,7 @@
 import hashlib
 import html
 import json
+import re
 import shutil
 from urllib.parse import quote
 from pathlib import Path
@@ -45,6 +46,8 @@ for row in legacy['qiecuo1024']:
     for part in row['n'].split('&'):
         Q1024[part] = dict(row, joint=row['n'] if '&' in row['n'] else '')
 REGIONS = list(legacy['region'].keys())
+SLUG_RE = re.compile(r'[a-z][a-z0-9-]*')
+SAFE_FILE = re.compile(r'[A-Za-z0-9][A-Za-z0-9._-]*')
 RESERVED = {'all', 'rules', 'join', 'assets', 'organizers', 'kit', 'privacy', 'cities', 'home'}
 
 e = html.escape
@@ -95,6 +98,7 @@ def layout(title, desc, body, depth, active='', canonical=''):
 {canon}
 <meta property="og:title" content="{e(title)}">
 <meta property="og:description" content="{e(desc)}">
+<script src="{r}kit/v1.js" data-chrome="none" defer></script>
 <link rel="stylesheet" href="{r}assets/site.css">
 </head>
 <body>
@@ -137,7 +141,7 @@ def portrait_of(o):
     return o.get('portrait') or o.get('avatar') or ''
 
 
-def honor_card(o, c, r, idx, big=False, link=False, numbered=True):
+def honor_card(o, c, r, big=False, link=False):
     city, host = c['name'], c.get('host', '')
     is_host = o['name'] == host
     role = '主理人' if is_host else '组织者'
@@ -247,7 +251,7 @@ def organizer_wall():
     ncity = len({c['name'] for c, _, _ in ppl})
     spot = ''
     if hosts:
-        spot = '<div class="honor spot">' + ''.join(honor_card(o, c, '', i + 1, link=True, numbered=False) for i, (c, o) in enumerate(hosts)) + '</div>'
+        spot = '<div class="honor spot">' + ''.join(honor_card(o, c, '', link=True) for c, o in hosts) + '</div>'
     wall = ''.join(f'<a class="wall-item" href="{c["slug"]}/index.html#{person_id(c, o)}">{thumb(o, "")}<span><b>{e(o["name"])}</b><em>{e(c["name"])} · 组织者</em></span></a>' for c, o in others)
     return f'''<section class="sec wall-sec">
   <div class="wrap">
@@ -270,9 +274,9 @@ def page_people():
     for reg in REGIONS:
         items = [(c, o) for c, o, h in ppl if c['region'] == reg and not h]
         if items:
-            groups += f'<section class="region" data-region-block="{e(reg)}"><h2>{e(reg)}<span>{len(items)}</span></h2><div class="honor">' + ''.join(honor_card(o, c, r, i + 1, link=True, numbered=False) for i, (c, o) in enumerate(items)) + '</div></section>'
+            groups += f'<section class="region" data-region-block="{e(reg)}"><h2>{e(reg)}<span>{len(items)}</span></h2><div class="honor">' + ''.join(honor_card(o, c, r, link=True) for c, o in items) + '</div></section>'
     hosts = [(c, o) for c, o, h in ppl if h]
-    host_html = ('<section class="region"><h2>首批主理人<span>' + str(len(hosts)) + '</span></h2><div class="honor spot">' + ''.join(honor_card(o, c, r, i + 1, link=True, numbered=False) for i, (c, o) in enumerate(hosts)) + '</div></section>') if hosts else ''
+    host_html = ('<section class="region"><h2>首批主理人<span>' + str(len(hosts)) + '</span></h2><div class="honor spot">' + ''.join(honor_card(o, c, r, link=True) for c, o in hosts) + '</div></section>') if hosts else ''
     body = f'''
 <section class="page-head people-head">
   <div class="wrap">
@@ -384,7 +388,7 @@ def page_city(c):
     host = c.get('host', '')
     if orgs:
         ordered = sorted(orgs, key=lambda o: o['name'] != host)
-        node_html = '<div class="honor">' + ''.join(honor_card(o, c, r, i + 1, big=(o['name'] == host)) for i, o in enumerate(ordered)) + '</div>'
+        node_html = '<div class="honor">' + ''.join(honor_card(o, c, r, big=(o['name'] == host)) for o in ordered) + '</div>'
         node_intro = f'感谢把 WaytoAGI 带到{e(n)}的人。共 {len(orgs)} 位组织者' + (f'，本城主理人：{e(host)}。' if host else '；主理人产生前由城市运营统筹。')
     else:
         node_html = ''
@@ -642,9 +646,22 @@ def build():
     if hashlib.sha256((ROOT / 'assets' / LOGO_FILE).read_bytes()).hexdigest() != want:
         raise SystemExit('Logo 与官方素材清单不一致，停止构建')
     slugs = [c['slug'] for c in CITIES]
-    assert len(slugs) == len(set(slugs)), '城市 slug 重复'
-    assert not RESERVED & set(slugs), '城市 slug 与保留路径冲突'
+    for sl in slugs:
+        if not SLUG_RE.fullmatch(sl or ''):
+            raise SystemExit(f'城市 slug 不合法：{sl!r}（只能用小写字母开头，含小写字母、数字和 -）')
+        if not (DIST / sl).resolve().is_relative_to(DIST.resolve()):
+            raise SystemExit(f'城市 slug 越出 hq/：{sl!r}')
+    if len(slugs) != len(set(slugs)):
+        raise SystemExit('城市 slug 重复')
+    if RESERVED & set(slugs):
+        raise SystemExit(f'城市 slug 与保留路径冲突：{sorted(RESERVED & set(slugs))}')
     for c in CITIES:
+        for key in ('group_qr',):
+            if c.get(key) and not SAFE_FILE.fullmatch(c[key]):
+                raise SystemExit(f'{c["name"]} 的 {key} 只能是文件名：{c[key]!r}')
+        for o in c['organizers']:
+            if portrait_of(o) and not SAFE_FILE.fullmatch(portrait_of(o)):
+                raise SystemExit(f'{c["name"]} {o["name"]} 的人物形象只能是文件名：{portrait_of(o)!r}')
         if c.get('group_qr') and not (ROOT / 'assets' / 'qr' / c['group_qr']).exists():
             raise SystemExit(f'{c["name"]} 的群码文件不存在：assets/qr/{c["group_qr"]}')
         for o in c['organizers']:
