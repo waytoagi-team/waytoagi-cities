@@ -1,0 +1,1780 @@
+{
+  "_说明": "城市站运营配置。改这里后运行 python3 scripts/build.py 重新生成。group_qr 填 assets/qr/ 下的图片文件名；organizers 只填已正式公示的组织者，格式 {\"name\": \"称呼\", \"team\": \"团队名（可选）\", \"partner\": \"合作伙伴（可选）\", \"since\": \"成为组织者的年月 YYYY-MM（可选）\", \"honors\": [\"荣誉，如 1024 超能 Coding 周末（可选）\"]}；host 填本城主理人称呼（须在 organizers 中）。 组织者还可填 record（战绩：event 活动名、checkins 到场、works 作品、volunteers 志愿者、joint 联合会场说明）、motto（一句话，本人提供）、portrait（人物形象：assets/people/ 下的图片文件名，竖版 4:5，jpg/png/webp，2MB 内，本人创作或有权使用，经审核后使用；旧字段 avatar 兼容）、badge（如「首批主理人」）。 history 为往期全国切磋大会参与记录（count 期数、first 首次年月、editions 期次），由 城市运营/往期数据/ 脚本从知识库抽取。",
+  "cities": [
+    {
+      "name": "金华",
+      "slug": "jinhua",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "广州",
+      "slug": "guangzhou",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "王贝",
+          "badge": "首批主理人",
+          "history": {
+            "count": 4,
+            "first": "2025-12",
+            "editions": [
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          },
+          "since": "2025-12"
+        }
+      ],
+      "host": "王贝"
+    },
+    {
+      "name": "杭州",
+      "slug": "hangzhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "冉伟",
+          "since": "2025-09",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 26,
+            "works": 12,
+            "volunteers": 10
+          },
+          "motto": "",
+          "badge": "首批主理人",
+          "history": {
+            "count": 10,
+            "first": "2025-09",
+            "editions": [
+              "第17期",
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": "冉伟"
+    },
+    {
+      "name": "上海",
+      "slug": "shanghai",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "赦林",
+          "since": "2026-07",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 31,
+            "works": 5,
+            "volunteers": 15
+          },
+          "motto": "",
+          "history": {
+            "count": 2,
+            "first": "2026-07",
+            "editions": [
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "南京",
+      "slug": "nanjing",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "铁桶",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 25,
+            "works": 10,
+            "volunteers": 7
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "北京",
+      "slug": "beijing",
+      "region": "华北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "杜宇航",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 4,
+            "works": 15,
+            "volunteers": 2
+          },
+          "motto": "",
+          "badge": "首批主理人",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": "杜宇航"
+    },
+    {
+      "name": "厦门",
+      "slug": "xiamen",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "冰鱼仔",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 56,
+            "works": 9
+          },
+          "motto": "",
+          "history": {
+            "count": 8,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第21期",
+              "第22期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "成都",
+      "slug": "chengdu",
+      "region": "西南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "JoJo",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 50,
+            "works": 6,
+            "volunteers": 3
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "郑州",
+      "slug": "zhengzhou",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "刘俊",
+          "since": "2026-06",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 39,
+            "works": 9,
+            "volunteers": 10
+          },
+          "motto": "",
+          "history": {
+            "count": 2,
+            "first": "2026-06",
+            "editions": [
+              "第25期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "长沙",
+      "slug": "changsha",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "刘洋",
+          "since": "2025-11",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 28,
+            "works": 5,
+            "volunteers": 5
+          },
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-11",
+            "editions": [
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "第25期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "昆明",
+      "slug": "kunming",
+      "region": "西南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "张羽昊",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 1,
+            "volunteers": 1
+          },
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "深圳",
+      "slug": "shenzhen",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "高雁",
+          "since": "2025-09",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 5,
+            "volunteers": 8
+          },
+          "motto": "",
+          "badge": "首批主理人",
+          "history": {
+            "count": 7,
+            "first": "2025-09",
+            "editions": [
+              "第17期",
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": "高雁"
+    },
+    {
+      "name": "武汉",
+      "slug": "wuhan",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "夜游榊",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 25,
+            "works": 6,
+            "volunteers": 1
+          },
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "西安",
+      "slug": "xian",
+      "region": "西北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "马儿",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 49,
+            "works": 10,
+            "volunteers": 15
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "重庆",
+      "slug": "chongqing",
+      "region": "西南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "潜龙",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 51,
+            "works": 9,
+            "volunteers": 10
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "苏州",
+      "slug": "suzhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "Ecfa（马丽清）",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 4,
+            "volunteers": 25
+          },
+          "motto": "",
+          "history": {
+            "count": 10,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "济南",
+      "slug": "jinan",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "胡杨",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 24,
+            "works": 6,
+            "volunteers": 9
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "宁波",
+      "slug": "ningbo",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "虫虫",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 25,
+            "works": 6
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "福州",
+      "slug": "fuzhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "晓飞",
+          "since": "2026-03",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 33,
+            "works": 9,
+            "volunteers": 12
+          },
+          "motto": "",
+          "history": {
+            "count": 2,
+            "first": "2026-03",
+            "editions": [
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "天津",
+      "slug": "tianjin",
+      "region": "华北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "张怀涛",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 3,
+            "volunteers": 2
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "温州",
+      "slug": "wenzhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "方柏衡",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 71,
+            "works": 1,
+            "volunteers": 10
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "大理",
+      "slug": "dali",
+      "region": "西南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "南昌",
+      "slug": "nanchang",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "Aiven Yi（易海）",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 93,
+            "works": 6,
+            "volunteers": 18
+          },
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第23期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "常州",
+      "slug": "changzhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "茹九儿",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 2
+          },
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第22期",
+              "第23期",
+              "第24期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "青岛",
+      "slug": "qingdao",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "慈溪",
+      "slug": "cixi",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "合肥",
+      "slug": "hefei",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "长春",
+      "slug": "changchun",
+      "region": "东北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "田志伟",
+          "since": "2026-03",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 2,
+            "volunteers": 6
+          },
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2026-03",
+            "editions": [
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "东莞",
+      "slug": "dongguan",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "黄业博（ETC）",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0
+          },
+          "motto": "",
+          "badge": "首批主理人",
+          "history": {
+            "count": 6,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": "黄业博（ETC）"
+    },
+    {
+      "name": "威海",
+      "slug": "weihai",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "子非鱼",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "volunteers": 4
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "太原",
+      "slug": "taiyuan",
+      "region": "华北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "中山",
+      "slug": "zhongshan",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "江明超",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0
+          },
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "乌鲁木齐",
+      "slug": "wulumuqi",
+      "region": "西北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "詹国勇（心一）",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 23,
+            "works": 2,
+            "volunteers": 8
+          },
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "第19期",
+              "第20期",
+              "第21期",
+              "第22期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "石家庄",
+      "slug": "shijiazhuang",
+      "region": "华北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "沈阳",
+      "slug": "shenyang",
+      "region": "东北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "朴圣堃",
+          "since": "2026-01",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 16,
+            "works": 4,
+            "volunteers": 10
+          },
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2026-01",
+            "editions": [
+              "第21期",
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "徐州",
+      "slug": "xuzhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "EchoBai",
+          "since": "2026-05",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 33,
+            "volunteers": 9
+          },
+          "motto": "",
+          "history": {
+            "count": 4,
+            "first": "2026-05",
+            "editions": [
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "襄阳",
+      "slug": "xiangyang",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "蔡乐",
+          "since": "2025-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 1,
+            "volunteers": 4
+          },
+          "motto": "",
+          "history": {
+            "count": 2,
+            "first": "2025-10",
+            "editions": [
+              "第18期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "大连",
+      "slug": "dalian",
+      "region": "东北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "熊大赵军",
+          "since": "2026-01",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 17,
+            "works": 3,
+            "volunteers": 7
+          },
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2026-01",
+            "editions": [
+              "第21期",
+              "第22期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "珠海",
+      "slug": "zhuhai",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "淮北",
+      "slug": "huaibei",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "袋子",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末"
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "台州",
+      "slug": "taizhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "张世龙",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 21,
+            "works": 6,
+            "volunteers": 7
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "无锡",
+      "slug": "wuxi",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "大桥来了",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 5
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "湛江",
+      "slug": "zhanjiang",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "手工编码师",
+          "since": "2026-03",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 2,
+            "volunteers": 4
+          },
+          "motto": "",
+          "history": {
+            "count": 6,
+            "first": "2026-03",
+            "editions": [
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "衡水",
+      "slug": "hengshui",
+      "region": "华北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "库尔勒",
+      "slug": "korla",
+      "region": "西北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "清迈",
+      "slug": "chiangmai",
+      "region": "港澳和海外",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "贵阳",
+      "slug": "guiyang",
+      "region": "西南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "枫子",
+          "since": "2025-12",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 22,
+            "works": 6,
+            "volunteers": 10
+          },
+          "motto": "",
+          "history": {
+            "count": 7,
+            "first": "2025-12",
+            "editions": [
+              "第20期",
+              "第21期",
+              "第22期",
+              "第23期",
+              "第24期",
+              "第25期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "盐城",
+      "slug": "yancheng",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "呼和浩特",
+      "slug": "hohhot",
+      "region": "华北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "海口",
+      "slug": "haikou",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "兰州",
+      "slug": "lanzhou",
+      "region": "西北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "哈尔滨",
+      "slug": "haerbin",
+      "region": "东北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "李豪",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "volunteers": 19
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "雄安",
+      "slug": "xiongan",
+      "region": "华北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "郝风飞",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 46,
+            "works": 3
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "邯郸",
+      "slug": "handan",
+      "region": "华北",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "宫莉",
+          "since": "2025-12",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0,
+            "works": 8,
+            "volunteers": 7
+          },
+          "motto": "",
+          "history": {
+            "count": 4,
+            "first": "2025-12",
+            "editions": [
+              "第20期",
+              "第21期",
+              "第25期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "佛山",
+      "slug": "foshan",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "吴斯斯",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 78,
+            "works": 20,
+            "volunteers": 20,
+            "joint": "广州、佛山联合会场"
+          },
+          "motto": "",
+          "badge": "首批主理人",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": "吴斯斯"
+    },
+    {
+      "name": "汕头",
+      "slug": "shantou",
+      "region": "华南",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "赣州",
+      "slug": "ganzhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "平顶山",
+      "slug": "pingdingshan",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "强楠",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 1,
+            "works": 2
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "澳门",
+      "slug": "macau",
+      "region": "港澳和海外",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "湖州",
+      "slug": "huzhou",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "李超杰",
+          "since": "2026-06",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 0
+          },
+          "motto": "",
+          "history": {
+            "count": 3,
+            "first": "2026-06",
+            "editions": [
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "菏泽",
+      "slug": "heze",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "濮阳",
+      "slug": "puyang",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "岳阳",
+      "slug": "yueyang",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "宜春",
+      "slug": "yichun",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "香港",
+      "slug": "hongkong",
+      "region": "港澳和海外",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "Jacky Ma",
+          "since": "2026-05",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "volunteers": 1
+          },
+          "motto": "",
+          "history": {
+            "count": 4,
+            "first": "2026-05",
+            "editions": [
+              "第24期",
+              "第25期",
+              "第26期",
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "邵阳",
+      "slug": "shaoyang",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "井冈山",
+      "slug": "jinggangshan",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "余姚",
+      "slug": "yuyao",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "信阳",
+      "slug": "xinyang",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "李国彬",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 29,
+            "works": 2,
+            "volunteers": 4
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "衡阳",
+      "slug": "hengyang",
+      "region": "华中",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "东京",
+      "slug": "tokyo",
+      "region": "港澳和海外",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    },
+    {
+      "name": "临沂",
+      "slug": "linyi",
+      "region": "华东",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [
+        {
+          "name": "张辉",
+          "since": "2026-10",
+          "honors": [],
+          "record": {
+            "event": "1024 超能 Coding 周末",
+            "checkins": 13,
+            "works": 2,
+            "volunteers": 6
+          },
+          "motto": "",
+          "history": {
+            "count": 1,
+            "first": "2026-10",
+            "editions": [
+              "特别场"
+            ],
+            "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
+          }
+        }
+      ],
+      "host": ""
+    },
+    {
+      "name": "新加坡",
+      "slug": "singapore",
+      "region": "港澳和海外",
+      "group_qr": "",
+      "group_qr_updated": "",
+      "events_url": "",
+      "organizers": [],
+      "host": ""
+    }
+  ]
+}

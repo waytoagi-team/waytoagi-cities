@@ -1,0 +1,173 @@
+{
+  "brand": "WaytoAGI / 通往AGI之路",
+  "source": "用户提供并于 2026-09-15 确认的 12 个原始 SVG",
+  "confirmed_by_user": "2026-09-15",
+  "variants": [
+    {
+      "file": "originals/中文_灰底白字1.svg",
+      "sha256": "d4186ff9650537027c2160899b8d27b5f7b89069a81848b3661d0d74287c69bb",
+      "width": 317,
+      "height": 101,
+      "viewBox": "0 0 317 101",
+      "layout": "horizontal",
+      "language": "zh",
+      "wordmark_color": "white",
+      "icon_background": "#ECEDEA",
+      "preferred_surface": "dark"
+    },
+    {
+      "file": "originals/中文_灰底白色2.svg",
+      "sha256": "742607326288efdc882feba981c94e604878e9632c64bc3ba986cda2a44de1f5",
+      "width": 317,
+      "height": 102,
+      "viewBox": "0 0 317 102",
+      "layout": "horizontal",
+      "language": "zh",
+      "wordmark_color": "white",
+      "icon_background": "black",
+      "preferred_surface": "dark"
+    },
+    {
+      "file": "originals/中文_灰底黑字1.svg",
+      "sha256": "1e28ef69b8c71765460d5180a32e7292fa03ad28c4150204af0987e84d245d6f",
+      "width": 317,
+      "height": 101,
+      "viewBox": "0 0 317 101",
+      "layout": "horizontal",
+      "language": "zh",
+      "wordmark_color": "black",
+      "icon_background": "#ECEDEA",
+      "preferred_surface": "light"
+    },
+    {
+      "file": "originals/中文_灰底黑色2.svg",
+      "sha256": "72bbfedc17d20b995c4a1422a4ec742928b9768a8f8bfaf654ec287ab225a419",
+      "width": 317,
+      "height": 102,
+      "viewBox": "0 0 317 102",
+      "layout": "horizontal",
+      "language": "zh",
+      "wordmark_color": "black",
+      "icon_background": "black",
+      "preferred_surface": "light"
+    },
+    {
+      "file": "originals/灰底白字1-1.svg",
+      "sha256": "d48cfd655e5bddc590d600339c6c01d0a1b7fa9577460958c5ae6426fb363d0f",
+      "width": 112,
+      "height": 113,
+      "viewBox": "0 0 112 113",
+      "layout": "stacked",
+      "language": "en",
+      "wordmark_color": "white",
+      "icon_background": "black",
+      "preferred_surface": "dark"
+    },
+    {
+      "file": "originals/灰底白字1-2.svg",
+      "sha256": "6d38af782d20c97c3afe7cda7da84785d9d7c468738ecc12548b517e6bd79a62",
+      "width": 112,
+      "height": 113,
+      "viewBox": "0 0 112 113",
+      "layout": "stacked",
+      "language": "en",
+      "wordmark_color": "white",
+      "icon_background": "white",
+      "preferred_surface": "dark"
+    },
+    {
+      "file": "originals/灰底白字1.svg",
+      "sha256": "41e4151062a727c10316bbe1a7e5ea8dcc508cd109406c85c50f2dc79ebc57a3",
+      "width": 317,
+      "height": 102,
+      "viewBox": "0 0 317 102",
+      "layout": "horizontal",
+      "language": "en",
+      "wordmark_color": "white",
+      "icon_background": "white",
+      "preferred_surface": "dark"
+    },
+    {
+      "file": "originals/灰底白色2.svg",
+      "sha256": "3571c85b6d400b54e2e75609f6a09a45c0a502227df111fdebb1d321a70ea5bb",
+      "width": 317,
+      "height": 102,
+      "viewBox": "0 0 317 102",
+      "layout": "horizontal",
+      "language": "en",
+      "wordmark_color": "white",
+      "icon_background": "black",
+      "preferred_surface": "dark"
+    },
+    {
+      "file": "originals/灰底黑字1-1.svg",
+      "sha256": "eb7cef5cdd2a92d7b174b7a247f88d5684ca12a28ce8b7df5945e2874f11b522",
+      "width": 317,
+      "height": 102,
+      "viewBox": "0 0 317 102",
+      "layout": "horizontal",
+      "language": "en",
+      "wordmark_color": "black",
+      "icon_background": "#ECEDEA",
+      "preferred_surface": "light"
+    },
+    {
+      "file": "originals/灰底黑字1.svg",
+      "sha256": "b09de1df2d2401232e560d8de593082d5e39d10e984e9687f62bb3e16ea687ce",
+      "width": 112,
+      "height": 113,
+      "viewBox": "0 0 112 113",
+      "layout": "stacked",
+      "language": "en",
+      "wordmark_color": "black",
+      "icon_background": "#ECEDEA",
+      "preferred_surface": "light"
+    },
+    {
+      "file": "originals/灰底黑色2.svg",
+      "sha256": "83d62662af368e74711e59328e83d1da7951f10df55e54e5c9886817b7ef9770",
+      "width": 317,
+      "height": 102,
+      "viewBox": "0 0 317 102",
+      "layout": "horizontal",
+      "language": "en",
+      "wordmark_color": "black",
+      "icon_background": "black",
+      "preferred_surface": "light"
+    },
+    {
+      "file": "originals/黑底黑字1.svg",
+      "sha256": "78db2971b3c1b251b34a83b3820221d7f9f8b14297f335eee0bd36861d85bb8b",
+      "width": 112,
+      "height": 113,
+      "viewBox": "0 0 112 113",
+      "layout": "stacked",
+      "language": "en",
+      "wordmark_color": "black",
+      "icon_background": "black",
+      "preferred_surface": "light"
+    }
+  ],
+  "defaults": {
+    "en_horizontal_light": "originals/灰底黑字1-1.svg",
+    "en_horizontal_dark": "originals/灰底白字1.svg",
+    "zh_horizontal_light": "originals/中文_灰底黑字1.svg",
+    "zh_horizontal_dark": "originals/中文_灰底白字1.svg",
+    "en_stacked_light": "originals/灰底黑字1.svg",
+    "en_stacked_dark": "originals/灰底白字1-2.svg"
+  },
+  "rules": [
+    "用户说加上 WaytoAGI logo、WaytoAGI 标志或通往AGI之路 logo 时自动使用本素材库。",
+    "先按横版或方形组合版、文字语言及背景明暗选型，再查看实际渲染效果。英文品牌称呼默认英文，要求中文品牌名时选中文。",
+    "浅背景优先黑字，深背景优先白字；默认浅色图标底。需要黑色图标底时从 variants 选同语言、版式和文字颜色的对应版本。",
+    "文件名中的灰底、黑底不能作为整张画布底色判断。SVG 根节点透明，图标自身有底色，defs 内 rect 用于裁切。",
+    "保留彩虹、星形、字形、比例与原有组合；禁止生成模型重绘、擅自换字、变色、拉伸、裁掉图形文字。",
+    "优先直接嵌入 SVG，需 PNG 时由原始 SVG 按目标尺寸透明栅格化。生成海报时优先预留位置后精确叠加原始 Logo。",
+    "适配时检查实际可见区域及 SVG 自带留白，按可见内容确定视觉大小；四周保留空隙。",
+    "复杂背景先选对比清晰的空白区域，必要时使用简洁衬底，交付前检查文字可读与无裁切。",
+    "方形文件仍含英文文字，不能当纯图标使用；需要纯图标时须另行明确处理。"
+  ],
+  "package_version": "1.1.0",
+  "packaged_on": "2026-11-17",
+  "path_base": "assets/manifest.json 所在目录"
+}

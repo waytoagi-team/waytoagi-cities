@@ -4,7 +4,7 @@
       "slug": "shanghai",
       "name": "上海",
       "eventsCity": "上海",
-      "enabled": true,
+      "enabled": false,
       "maintainers": []
     }
   ]

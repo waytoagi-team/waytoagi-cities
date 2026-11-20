@@ -1,0 +1,4 @@
+{
+  "_说明": "本城收录活动。只登记已核对、符合收录规范的活动：活动站发布、官方介绍与标识原件、现场扫码签到、3 天内交照片。字段：city 城市名（须在 cities.json）；date 活动日期 YYYY-MM-DD；title 活动名；host 组织者团队名或合作社区名（须本人或对方同意公开）；kind 填「组织者」或「合作社区」；checkins 签到人数；url 活动站链接（https）。不填个人联系方式和报名名单。改后运行 python3 scripts/build.py。",
+  "events": []
+}
