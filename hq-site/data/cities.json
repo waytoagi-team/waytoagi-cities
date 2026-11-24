@@ -1,5 +1,5 @@
 {
-  "_说明": "城市站运营配置。改这里后运行 python3 scripts/build.py 重新生成。group_qr 填 assets/qr/ 下的图片文件名；organizers 只填已正式公示的组织者，格式 {\"name\": \"称呼\", \"team\": \"团队名（可选）\", \"partner\": \"合作伙伴（可选）\", \"since\": \"成为组织者的年月 YYYY-MM（可选）\", \"honors\": [\"荣誉，如 1024 超能 Coding 周末（可选）\"]}；host 填本城主理人称呼（须在 organizers 中）。 组织者还可填 record（战绩：event 活动名、checkins 到场、works 作品、volunteers 志愿者、joint 联合会场说明）、motto（一句话，本人提供）、portrait（人物形象：assets/people/ 下的图片文件名，竖版 4:5，jpg/png/webp，2MB 内，本人创作或有权使用，经审核后使用；旧字段 avatar 兼容）、badge（如「首批主理人」）。 history 为往期全国切磋大会参与记录（count 期数、first 首次年月、editions 期次），由 城市运营/往期数据/ 脚本从知识库抽取。",
+  "_说明": "城市站运营配置。改这里后运行 python3 scripts/build.py 重新生成。group_qr 填 assets/qr/ 下的图片文件名；organizers 只填已正式公示的组织者，格式 {\"name\": \"称呼\", \"team\": \"团队名（可选）\", \"partner\": \"合作伙伴（可选）\", \"since\": \"成为组织者的年月 YYYY-MM（可选）\", \"honors\": [\"荣誉，如 1024 超能 Coding 周末（可选）\"]}。 组织者还可填 record（战绩：event 活动名、checkins 到场、works 作品、volunteers 志愿者、joint 联合会场说明）、motto（一句话，本人提供）、portrait（人物形象：assets/people/ 下的图片文件名，竖版 4:5，jpg/png/webp，2MB 内，本人创作或有权使用，经审核后使用；旧字段 avatar 兼容）、badge（荣誉标签，可选）。 history 为往期全国切磋大会参与记录（count 期数、first 首次年月、editions 期次），由 城市运营/往期数据/ 脚本从知识库抽取。",
   "cities": [
     {
       "name": "金华",
@@ -8,8 +8,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "广州",
@@ -21,7 +20,6 @@
       "organizers": [
         {
           "name": "王贝",
-          "badge": "首批主理人",
           "history": {
             "count": 4,
             "first": "2025-12",
@@ -35,8 +33,7 @@
           },
           "since": "2025-12"
         }
-      ],
-      "host": "王贝"
+      ]
     },
     {
       "name": "杭州",
@@ -57,7 +54,6 @@
             "volunteers": 10
           },
           "motto": "",
-          "badge": "首批主理人",
           "history": {
             "count": 10,
             "first": "2025-09",
@@ -76,8 +72,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": "冉伟"
+      ]
     },
     {
       "name": "上海",
@@ -108,8 +103,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "南京",
@@ -139,8 +133,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "北京",
@@ -161,7 +154,6 @@
             "volunteers": 2
           },
           "motto": "",
-          "badge": "首批主理人",
           "history": {
             "count": 1,
             "first": "2026-10",
@@ -171,8 +163,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": "杜宇航"
+      ]
     },
     {
       "name": "厦门",
@@ -208,8 +199,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "成都",
@@ -239,8 +229,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "郑州",
@@ -271,8 +260,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "长沙",
@@ -308,8 +296,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "昆明",
@@ -345,8 +332,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "深圳",
@@ -367,7 +353,6 @@
             "volunteers": 8
           },
           "motto": "",
-          "badge": "首批主理人",
           "history": {
             "count": 7,
             "first": "2025-09",
@@ -383,8 +368,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": "高雁"
+      ]
     },
     {
       "name": "武汉",
@@ -419,8 +403,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "西安",
@@ -450,8 +433,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "重庆",
@@ -481,8 +463,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "苏州",
@@ -521,8 +502,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "济南",
@@ -552,8 +532,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "宁波",
@@ -582,8 +561,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "福州",
@@ -614,8 +592,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "天津",
@@ -645,8 +622,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "温州",
@@ -676,8 +652,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "大理",
@@ -686,8 +661,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "南昌",
@@ -723,8 +697,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "常州",
@@ -759,8 +732,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "青岛",
@@ -769,8 +741,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "慈溪",
@@ -779,8 +750,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "合肥",
@@ -789,8 +759,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "长春",
@@ -825,8 +794,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "东莞",
@@ -845,7 +813,6 @@
             "checkins": 0
           },
           "motto": "",
-          "badge": "首批主理人",
           "history": {
             "count": 6,
             "first": "2025-10",
@@ -860,8 +827,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": "黄业博（ETC）"
+      ]
     },
     {
       "name": "威海",
@@ -890,8 +856,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "太原",
@@ -900,8 +865,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "中山",
@@ -935,8 +899,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "乌鲁木齐",
@@ -971,8 +934,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "石家庄",
@@ -981,8 +943,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "沈阳",
@@ -1018,8 +979,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "徐州",
@@ -1051,8 +1011,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "襄阳",
@@ -1083,8 +1042,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "大连",
@@ -1119,8 +1077,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "珠海",
@@ -1129,8 +1086,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "淮北",
@@ -1157,8 +1113,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "台州",
@@ -1188,8 +1143,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "无锡",
@@ -1218,8 +1172,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "湛江",
@@ -1254,8 +1207,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "衡水",
@@ -1264,8 +1216,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "库尔勒",
@@ -1274,8 +1225,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "清迈",
@@ -1284,8 +1234,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "贵阳",
@@ -1321,8 +1270,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "盐城",
@@ -1331,8 +1279,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "呼和浩特",
@@ -1341,8 +1288,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "海口",
@@ -1351,8 +1297,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "兰州",
@@ -1361,8 +1306,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "哈尔滨",
@@ -1391,8 +1335,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "雄安",
@@ -1421,8 +1364,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "邯郸",
@@ -1455,8 +1397,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "佛山",
@@ -1478,7 +1419,6 @@
             "joint": "广州、佛山联合会场"
           },
           "motto": "",
-          "badge": "首批主理人",
           "history": {
             "count": 1,
             "first": "2026-10",
@@ -1488,8 +1428,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": "吴斯斯"
+      ]
     },
     {
       "name": "汕头",
@@ -1498,8 +1437,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "赣州",
@@ -1508,8 +1446,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "平顶山",
@@ -1538,8 +1475,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "澳门",
@@ -1548,8 +1484,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "湖州",
@@ -1579,8 +1514,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "菏泽",
@@ -1589,8 +1523,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "濮阳",
@@ -1599,8 +1532,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "岳阳",
@@ -1609,8 +1541,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "宜春",
@@ -1619,8 +1550,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "香港",
@@ -1651,8 +1581,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "邵阳",
@@ -1661,8 +1590,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "井冈山",
@@ -1671,8 +1599,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "余姚",
@@ -1681,8 +1608,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "信阳",
@@ -1712,8 +1638,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "衡阳",
@@ -1722,8 +1647,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "东京",
@@ -1732,8 +1656,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     },
     {
       "name": "临沂",
@@ -1763,8 +1686,7 @@
             "source": "知识库各期活动文档（第17—26期）与 1024 志愿者表"
           }
         }
-      ],
-      "host": ""
+      ]
     },
     {
       "name": "新加坡",
@@ -1773,8 +1695,7 @@
       "group_qr": "",
       "group_qr_updated": "",
       "events_url": "",
-      "organizers": [],
-      "host": ""
+      "organizers": []
     }
   ]
 }
