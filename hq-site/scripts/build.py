@@ -142,9 +142,8 @@ def portrait_of(o):
 
 
 def honor_card(o, c, r, big=False, link=False):
-    city, host = c['name'], c.get('host', '')
-    is_host = o['name'] == host
-    role = '主理人' if is_host else '组织者'
+    city = c['name']
+    role = '组织者'
     pid = person_id(c, o)
     pic = portrait_of(o)
     if pic:
@@ -157,14 +156,14 @@ def honor_card(o, c, r, big=False, link=False):
     team = f'<p class="hc-team">WaytoAGI {e(city)} · {e(o["team"])}</p>' if o.get('team') else ''
     partner = f'<p class="hc-team">合作伙伴：{e(o["partner"])}</p>' if o.get('partner') else ''
     motto = f'<blockquote class="hc-motto">{e(o["motto"])}</blockquote>' if o.get('motto') else ''
-    duty = f'统筹{e(city)}本城活动排期和城市群，参与商业合作派发' if is_host else f'在{e(city)}办 AI 活动，带动本城社区'
+    duty = f'在{e(city)}办 AI 活动，带动本城社区'
     honors = ''.join(f'<span>{e(h)}</span>' for h in o.get('honors') or [])
     hist = o.get('history') or {}
     SHOW_HISTORY = False  # 往期数据尚不齐全，暂不展示；history 字段保留在 cities.json
     hist_html = (f'<dl class="hc-stats"><div><dd>{hist["count"]}</dd><dt>期全国切磋大会</dt></div>'
                  f'<div><dd>{e(hist["first"].replace("-", "."))}</dd><dt>首次参与</dt></div></dl>' if SHOW_HISTORY and hist.get('count') else '')
     go = f'<a class="hc-go" href="{r}{c["slug"]}/index.html">进入城市页 <span aria-hidden="true">→</span></a>' if link else ''
-    cls = 'hcard' + (' host' if is_host else '') + (' xl' if big else '') + (' has-pic' if pic else '')
+    cls = 'hcard' + (' xl' if big else '') + (' has-pic' if pic else '')
     over = '' if big else f'<div class="hc-over">{ident}</div>'
     head = f'<div class="hc-ident">{ident}</div>' if big else ''
     return f'''<article class="{cls}" id="{pid}">
@@ -189,18 +188,16 @@ def head_people(c):
     orgs = c['organizers']
     if not orgs:
         return ''
-    host = c.get('host', '')
-    lead = next((o for o in orgs if o['name'] == host), orgs[0])
+    lead = orgs[0]
     more = f' 等 {len(orgs)} 位组织者' if len(orgs) > 1 else ''
-    return f'<a class="head-person{" host" if lead["name"] == host else ""}" href="#{person_id(c, lead)}">{thumb(lead, "../")}<span>{"主理人" if lead["name"] == host else "组织者"} <b>{e(lead["name"])}</b>{more}</span></a>'
+    return f'<a class="head-person" href="#{person_id(c, lead)}">{thumb(lead, "../")}<span>组织者 <b>{e(lead["name"])}</b>{more}</span></a>'
 
 
 def all_people():
     out = []
     for c in sorted(CITIES, key=lambda c: -COUNT.get(c['name'], 0)):
-        host = c.get('host', '')
-        for o in sorted(c['organizers'], key=lambda o: o['name'] != host):
-            out.append((c, o, o['name'] == host))
+        for o in c['organizers']:
+            out.append((c, o))
     return out
 
 
@@ -245,18 +242,12 @@ def organizer_wall():
     ppl = all_people()
     if not ppl:
         return ''
-    hosts = [(c, o) for c, o, h in ppl if h]
-    others = [(c, o) for c, o, h in ppl if not h]
-    names = {o['name'] for _, o, _ in ppl}
-    ncity = len({c['name'] for c, _, _ in ppl})
-    spot = ''
-    if hosts:
-        spot = '<div class="honor spot">' + ''.join(honor_card(o, c, '', link=True) for c, o in hosts) + '</div>'
-    wall = ''.join(f'<a class="wall-item" href="{c["slug"]}/index.html#{person_id(c, o)}">{thumb(o, "")}<span><b>{e(o["name"])}</b><em>{e(c["name"])} · 组织者</em></span></a>' for c, o in others)
+    names = {o['name'] for _, o in ppl}
+    ncity = len({c['name'] for c, _ in ppl})
+    wall = ''.join(f'<a class="wall-item" href="{c["slug"]}/index.html#{person_id(c, o)}">{thumb(o, "")}<span><b>{e(o["name"])}</b><em>{e(c["name"])} · 组织者</em></span></a>' for c, o in ppl)
     return f'''<section class="sec wall-sec">
   <div class="wrap">
-    <div class="sec-head"><span class="eyebrow">城市组织者</span><h2>把 WaytoAGI 带到 <span class="hl">{ncity} 座城市</span>的人</h2><p>{len(names)} 位组织者{f"，其中 {len(hosts)} 位首批主理人" if hosts else ""}。他们找场地、拉群、带志愿者，让每一场切磋大会在自己的城市发生。</p></div>
-    {spot}
+    <div class="sec-head"><span class="eyebrow">城市组织者</span><h2>把 WaytoAGI 带到 <span class="hl">{ncity} 座城市</span>的人</h2><p>{len(names)} 位组织者。他们找场地、拉群、带志愿者，让每一场切磋大会在自己的城市发生。</p></div>
     <div class="wall">{wall}</div>
     <div class="center"><a class="btn ghost" href="organizers/index.html">看全部组织者荣誉卡</a></div>
   </div>
@@ -266,17 +257,13 @@ def organizer_wall():
 def page_people():
     r = '../'
     ppl = all_people()
-    names = {o['name'] for _, o, _ in ppl}
-    tot = lambda k: sum((o.get('record') or {}).get(k) or 0 for _, o, _ in ppl)
-    nhost = sum(1 for *_, h in ppl if h)
-    stats = [(len(names), '位城市组织者'), (nhost, '位首批主理人'), (len({c['name'] for c, _, _ in ppl}), '座城市')]
+    names = {o['name'] for _, o in ppl}
+    stats = [(len(names), '位城市组织者'), (len({c['name'] for c, _ in ppl}), '座城市')]
     groups = ''
     for reg in REGIONS:
-        items = [(c, o) for c, o, h in ppl if c['region'] == reg and not h]
+        items = [(c, o) for c, o in ppl if c['region'] == reg]
         if items:
             groups += f'<section class="region" data-region-block="{e(reg)}"><h2>{e(reg)}<span>{len(items)}</span></h2><div class="honor">' + ''.join(honor_card(o, c, r, link=True) for c, o in items) + '</div></section>'
-    hosts = [(c, o) for c, o, h in ppl if h]
-    host_html = ('<section class="region"><h2>首批主理人<span>' + str(len(hosts)) + '</span></h2><div class="honor spot">' + ''.join(honor_card(o, c, r, link=True) for c, o in hosts) + '</div></section>') if hosts else ''
     body = f'''
 <section class="page-head people-head">
   <div class="wrap">
@@ -288,10 +275,10 @@ def page_people():
 </section>
 <div class="wrap people">
   <aside class="pic-note"><span class="pic-note-ico" aria-hidden="true">✦</span><div><h2>放上你自己的人物形象</h2><p>卡片顶部是你的形象位：AI 创作的角色、插画或本人照片都可以。竖版 4:5，建议 1200×1500 像素以上，JPG、PNG 或 WebP，2MB 以内。须是你本人的形象或你有权使用的作品，不含他人肖像、品牌标识和他人 IP。发给对接你的城市运营，审核后上线。</p></div></aside>
-  {host_html}{groups}
+  {groups}
   <section class="card cta-panel"><div><h2>你的城市，也可以由你点亮</h2><p>个人或团队都可以申请成为组织者，办成首场即可拿到你的荣誉卡。</p></div><div class="cta-row">{form_btn('organizer_apply', '申请成为组织者')}<a class="btn ghost" href="{r}rules/index.html#join">怎么成为组织者</a></div></section>
 </div>'''
-    return layout('城市组织者荣誉榜 · WaytoAGI 城市站', f'{len(names)} 位 WaytoAGI 城市组织者与主理人，把 AI 切磋大会带到全国各地。', body, 1, 'people', 'organizers/')
+    return layout('城市组织者荣誉榜 · WaytoAGI 城市站', f'{len(names)} 位 WaytoAGI 城市组织者，把 AI 切磋大会带到全国各地。', body, 1, 'people', 'organizers/')
 
 
 def page_home():
@@ -324,7 +311,7 @@ def page_home():
 {organizer_wall()}
 <section class="sec">
   <div class="wrap">
-    <div class="sec-head"><h2>组织者 → 主理人 → 区域负责人</h2><p>同城可以有多位组织者，活动不限场次。每城一位主理人从组织者中产生，统筹本城活动排期和城市群。</p></div>
+    <div class="sec-head"><h2>同城组织者，彼此平级</h2><p>同城可以有多位组织者，活动不限场次，不设城市内的上下级。排期和城市群由城市运营统筹。</p></div>
     <div class="grid g3">
       <a class="card link-card" href="all/index.html"><span class="num">01</span><h3>找到本城</h3><p>查看历史活动；已有群入口的城市可扫码加入，其余城市可先登记。</p><span class="more">全部城市 →</span></a>
       <a class="card link-card" href="join/index.html"><span class="num">02</span><h3>成为组织者</h3><p>个人或团队都可以申请，办成首场即在城市页公示。园区、空间和机构以合作伙伴身份接入。</p><span class="more">申请成为组织者 →</span></a>
@@ -385,11 +372,9 @@ def page_city(c):
     stat_html = ''.join(f'<div><b>{e(v)}</b><span>{e(t)}</span></div>' for v, t in stats)
 
     orgs = c['organizers']
-    host = c.get('host', '')
     if orgs:
-        ordered = sorted(orgs, key=lambda o: o['name'] != host)
-        node_html = '<div class="honor">' + ''.join(honor_card(o, c, r, big=(o['name'] == host)) for o in ordered) + '</div>'
-        node_intro = f'感谢把 WaytoAGI 带到{e(n)}的人。共 {len(orgs)} 位组织者' + (f'，本城主理人：{e(host)}。' if host else '；主理人产生前由城市运营统筹。')
+        node_html = '<div class="honor">' + ''.join(honor_card(o, c, r) for o in orgs) + '</div>'
+        node_intro = f'感谢把 WaytoAGI 带到{e(n)}的人。共 {len(orgs)} 位组织者，本城排期和城市群由城市运营统筹。'
     else:
         node_html = ''
         node_intro = '本城还没有公示的组织者。办成首场即可在这里公示。'
@@ -467,20 +452,18 @@ def page_rules():
   <div class="wrap">
     <span class="chip warn">{e(site['rules_version'])} · 以城市运营通知为准</span>
     <h1>城市站<span class="hl">规则</span></h1>
-    <p class="lead">三级角色：组织者 → 主理人 → 区域负责人。每个城市一个城市页，由总部维护；同城可以有多位组织者，活动不限场次。</p>
+    <p class="lead">个人身份只有一种：组织者，彼此平级，不分等级。每个城市一个城市页，由总部维护；同城可以有多位组织者，活动不限场次。</p>
     <nav class="toc" aria-label="本页目录"><a href="#roles">角色</a><a href="#join">加入</a><a href="#cosign">单场合作社区</a><a href="#multi">同城多位组织者</a><a href="#grade">活动分级</a><a href="#listing">收录规范</a><a href="#fund">城市基金</a><a href="#redline">红线与处理</a></nav>
   </div>
 </section>
 <div class="wrap rules">
   <section id="roles" class="rsec">
-    <h2>三级角色</h2>
-    <div class="tablebox"><table>
-      <thead><tr><th scope="col">角色</th><th scope="col">人数</th><th scope="col">负责什么</th><th scope="col">怎么产生</th></tr></thead>
-      <tbody>
-        <tr><td>组织者</td><td>每城不限</td><td>在本城办活动；可带自己的团队，人手自行安排</td><td>申请后试办首场，合格即在城市页公示</td></tr>
-        <tr><td>主理人</td><td>每城 1 人</td><td>统筹本城活动排期和城市群，参与商业合作派发，每季度与总部复盘；本人仍是组织者</td><td>从本城组织者中产生，看最近一个季度的活动记录，加一次面谈；任期一年。具体条件以城市运营通知为准</td></tr>
-        <tr><td>区域负责人</td><td>按大区</td><td>帮区域内新城市办第一场，区域商业合作优先</td><td>从主理人中选，看是否带出过周边新城市和商业合作评级</td></tr>
-      </tbody></table></div>
+    <h2>角色</h2>
+    <ul class="dl">
+      <li><b>组织者</b><span>每城不限人数，彼此平级。在本城办活动，可带自己的团队，人手自行安排。</span></li>
+      <li><b>怎么产生</b><span>申请后试办首场，合格即在城市页公示。</span></li>
+      <li><b>认可</b><span>帮周边新城市办成第一场的组织者，会在人物卡上获得荣誉标签；总部介绍商业合作时参考组织者的活动记录。</span></li>
+    </ul>
     <p class="muted" style="margin-top:12px">园区、OPC 社区、联合办公空间、高校、协会和海外社群是合作伙伴，按机构合作管理，不占个人身份。来参加活动、帮忙的人统称参与者，不设头衔。</p>
   </section>
 
@@ -517,12 +500,12 @@ def page_rules():
   <section id="multi" class="rsec">
     <h2>同城多位组织者</h2>
     <ul class="dl">
-      <li><b>主理人</b><span>每城 1 名主理人，从本城组织者中产生，统筹本城活动排期和城市群；主理人产生前由城市运营统筹。</span></li>
-      <li><b>命名</b><span>「WaytoAGI · 城市名」只由总部使用；组织者团队可用「WaytoAGI 城市名 · 团队名」。个人头衔只用组织者、主理人、区域负责人，不得自称城市负责人、城市代理或总代。</span></li>
-      <li><b>城市群</b><span>每城一个长期群，由总部账号建群，主理人和本城组织者任管理员。组织者可另建活动群，但不得冠以城市群名义，不得收取群费。</span></li>
-      <li><b>撞期</b><span>活动在活动站选择本城发布，主理人据此查看本城排期；同城同时段可并行；仅在争用场地、预算或联动名额时协调。主理人也是申请方时，由城市运营协调。</span></li>
+      <li><b>平级</b><span>同城组织者彼此平级，各自带团队办活动；本城排期和城市群由城市运营统筹。</span></li>
+      <li><b>命名</b><span>「WaytoAGI · 城市名」只由总部使用；组织者团队可用「WaytoAGI 城市名 · 团队名」。个人头衔只用「组织者」，不得自称城市负责人、区域负责人、城市代理或总代。</span></li>
+      <li><b>城市群</b><span>每城一个长期群，由总部账号建群，本城组织者任管理员。组织者可另建活动群，但不得冠以城市群名义，不得收取群费。</span></li>
+      <li><b>撞期</b><span>活动在活动站选择本城发布，组织者都能看到本城排期；同城同时段可并行；仅在争用场地、预算或联动名额时由城市运营协调。</span></li>
       <li><b>全国联动</b><span>切磋大会等全国活动，每位正式组织者都可报名分会场，各会场分别满足场地和签到要求。</span></li>
-      <li><b>争议</b><span>主理人先协调；5 个工作日内无法解决的，交城市运营裁定。</span></li>
+      <li><b>争议</b><span>相关组织者先自行沟通；5 个工作日内无法解决的，交城市运营裁定。</span></li>
     </ul>
   </section>
 
@@ -575,7 +558,7 @@ def page_rules():
   <section id="redline" class="rsec">
     <h2>红线与处理</h2>
     <div class="grid g2">
-      <div class="card"><h3>各级通用规则</h3><ul class="checks">
+      <div class="card"><h3>通用规则</h3><ul class="checks">
         <li>不得自称官方、总部或城市代理，不冒用大厂、嘉宾、赞助方名义</li>
         <li>试行期内暂不办公开收费活动；不私下收费、不收群费，不把成员引到个人付费群</li>
         <li>报名名单不导出给第三方；拍照须在报名须知中说明</li>
@@ -587,7 +570,7 @@ def page_rules():
     </div>
   </section>
 </div>'''
-    return layout('城市站规则 · WaytoAGI 城市站', 'WaytoAGI 城市站规则（试行）：三级角色、怎么成为组织者、同城多位组织者、活动分级、收录规范与城市基金。', body, 1, 'rules', 'rules/')
+    return layout('城市站规则 · WaytoAGI 城市站', 'WaytoAGI 城市站规则（试行）：角色、怎么成为组织者、同城多位组织者、活动分级、收录规范与城市基金。', body, 1, 'rules', 'rules/')
 
 
 def page_join():
@@ -629,7 +612,7 @@ def page_join():
   </div>
   <section class="card faq">
     <h2>常见问题</h2>
-    <details><summary>同一个城市已经有组织者了，我还能申请吗？</summary><p>可以。同城可以有多位组织者，各自带团队办活动；本城主理人统一协调活动排期和城市群。</p></details>
+    <details><summary>同一个城市已经有组织者了，我还能申请吗？</summary><p>可以。同城可以有多位组织者，各自带团队办活动，彼此平级；排期和城市群由城市运营统筹。</p></details>
     <details><summary>需要配副手或固定团队吗？</summary><p>不强制。人手由组织者自行安排。</p></details>
     <details><summary>办活动要交钱或被抽成吗？</summary><p>不用。组织者自办社区活动不抽成；试行期内也暂不办公开收费活动。总部介绍的商业合作原则上按书面约定基数的 20% 进城市基金，用于反哺城市运营。</p></details>
     <details><summary>我只想办一场，能让 WaytoAGI 作为合作社区吗？</summary><p>可以。活动前 7 天提交活动报备并勾选「单场合作社区」，确认后按「合作社区：WaytoAGI」署名，不需要先成为组织者。详见<a href="{r}rules/index.html#cosign">单场合作社区规则</a>。</p></details>

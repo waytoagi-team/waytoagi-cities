@@ -282,9 +282,6 @@ td:first-child { font-weight: 600; white-space: nowrap; }
   background: #030719; border: 1px solid var(--line); box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 18px 40px -18px rgba(3, 7, 25, .55);
   transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease; }
 .hcard:hover { transform: translateY(-4px); border-color: var(--ring); box-shadow: 0 1px 0 rgba(255, 255, 255, .08) inset, 0 28px 60px -22px rgba(75, 82, 170, .65); }
-.hcard.host { --a1: #2a1d3f; --a2: #6b4f7d; --a3: #c9a6a0; --a4: #ecd5b8; --line: rgba(236, 213, 184, .28); --ring: rgba(236, 213, 184, .6);
-  --role-bg: #ecd5b8; --role-fg: #1d1426; --dot: #ecd5b8; background: #0b0814; }
-.hcard.host:hover { box-shadow: 0 1px 0 rgba(255, 255, 255, .08) inset, 0 28px 60px -22px rgba(201, 166, 160, .55); }
 .hcard:target { outline: 2px solid var(--ring); outline-offset: 4px; }
 /* 形象区：极光 */
 .hc-art { position: relative; overflow: hidden; isolation: isolate; aspect-ratio: 4 / 5; border-radius: 19px;
@@ -313,9 +310,7 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .hc-role, .hc-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 600; letter-spacing: .02em; padding: 3px 10px; border-radius: 999px; }
 .hc-role { background: var(--role-bg); color: var(--role-fg); }
 .hc-role::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--dot); box-shadow: 0 0 8px var(--dot); }
-.hcard.host .hc-role::before { background: #1d1426; box-shadow: none; }
 .hc-badge { background: transparent; color: rgba(255, 255, 255, .78); border: 1px solid rgba(255, 255, 255, .22); }
-.hcard.host .hc-badge { color: #ecd5b8; border-color: rgba(236, 213, 184, .45); }
 .hc-name, .card .hcard h3.hc-name { margin-top: 10px; font-size: 26px; font-weight: 600; line-height: 1.15; letter-spacing: -.03em; word-break: break-word; }
 .hc-name a { color: inherit; text-decoration: none; }
 .hc-name a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
@@ -331,14 +326,12 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .hc-stats div { display: flex; flex-direction: column; min-width: 0; }
 .hc-stats dd { margin: 0; font-size: 22px; font-weight: 500; line-height: 1.1; letter-spacing: -.03em; color: #fff; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .hc-stats dt { margin-top: 4px; font-size: 11px; color: var(--muted); white-space: nowrap; }
-.hcard.host .hc-stats dd { color: #f3e6d4; }
 .hcard.xl .hc-stats dd { font-size: 30px; }
 .hc-go { font-size: 12.5px; font-weight: 500; color: var(--sub); text-decoration: none; transition: color .2s; }
 .hc-go span { display: inline-block; transition: transform .2s; }
 .hc-go:hover { color: var(--fg); }
 .hc-go:hover span { transform: translateX(3px); }
-.hcard.host .hc-go:hover { color: #ecd5b8; }
-/* 城市页主理人大卡 */
+/* 人物大卡（xl） */
 .hcard.xl { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(220px, 300px) minmax(0, 1fr); gap: 6px; }
 .hcard.xl .hc-info { padding: 26px 26px 16px; gap: 14px; }
 .hcard.xl .hc-name, .card .hcard.xl h3.hc-name { font-size: 46px; margin-top: 14px; letter-spacing: -.045em; }
@@ -360,7 +353,6 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .head-person { display: inline-flex; align-items: center; gap: 10px; margin-top: 14px; padding: 6px 16px 6px 6px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); color: var(--ink-2); text-decoration: none; font-size: 14px; box-shadow: var(--shadow); }
 .head-person b { color: var(--ink); }
 .head-person:hover { border-color: var(--primary); }
-.head-person.host { border-color: #e2cdb0; background: linear-gradient(90deg, #faf5ee, #fff); }
 
 /* 首页组织者墙 */
 .wall-sec .honor.spot { margin-bottom: 18px; }
@@ -372,7 +364,6 @@ td:first-child { font-weight: 600; white-space: nowrap; }
 .wall-item > span:last-child { min-width: 0; }
 .hc-avatar.sm { width: 34px; height: 34px; font-size: 14px; color: #fff; background: linear-gradient(160deg, #112d72, #4b52aa 55%, #a887dc); }
 .hc-avatar.sm::before { display: none; }
-.head-person.host .hc-avatar.sm { color: #1d1426; background: linear-gradient(160deg, #6b4f7d, #c9a6a0 60%, #ecd5b8); }
 
 /* 荣誉榜页 */
 .people-head .people-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
