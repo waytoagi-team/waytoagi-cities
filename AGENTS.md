@@ -9,7 +9,7 @@
 ## 先确认三件事
 
 1. 用户是哪个城市？在 `cities.json` 里找到这个城市的 `slug`（例如 `shanghai`）。
-   找不到就停下，提醒用户先申请成为城市管理者（见 README）。
+   找不到就停下，提醒用户先填飞书申请表成为城市组织者（入口见 README），不要引导去 issue 提申请。
 2. 你只能修改 `cities/<slug>/` 目录。其他文件和目录都不要动，
    包括 `cities.json`、`kit/`、`home/`、`template/`、`scripts/`、`.github/`、根目录的 `package.json` 和 `edgeone.json`、`README.md`、本文件。
 3. 目录还不存在时，有 `template/` 就复制它到 `cities/<slug>/` 作为起点，

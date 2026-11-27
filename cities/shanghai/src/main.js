@@ -149,7 +149,7 @@ document.querySelector("#app").innerHTML = `
           <li>主理人和核心成员</li>
           <li>加入方式，例如社群二维码</li>
         </ul>
-        <p>想一起建设上海站？<a href="https://github.com/waytoagi-team/waytoagi-cities" target="_blank" rel="noopener">申请成为城市管理者 ↗</a></p>
+        <p>想一起建设上海站？<a href="https://waytoagi.feishu.cn/share/base/shrcnmnSw2TcSattSyG0KsmasUg" target="_blank" rel="noopener">申请成为城市组织者 ↗</a></p>
       </div>
     </section>
   </div>

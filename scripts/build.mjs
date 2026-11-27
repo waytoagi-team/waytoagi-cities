@@ -210,7 +210,7 @@ function checkPendingCities(cities) {
   const registered = new Set(cities.map((city) => city.slug));
   const dirs = existsSync(join(ROOT, "cities")) ? readdirSync(join(ROOT, "cities"), { withFileTypes: true }) : [];
   const unregistered = dirs.filter((d) => d.isDirectory() && !registered.has(d.name)).map((d) => d.name);
-  if (unregistered.length > 0) fail(`cities/ 下有未登记的城市目录：${unregistered.join("、")}（请先申请成为城市管理者，见 README）`);
+  if (unregistered.length > 0) fail(`cities/ 下有未登记的城市目录：${unregistered.join("、")}（请先填飞书申请表成为城市组织者，见 README）`);
   const pending = cities.filter((city) => !city.enabled && existsSync(join(ROOT, "cities", city.slug)));
   const scratch = mkdtempSync(join(tmpdir(), "cities-check-"));
   // fail() 直接 process.exit，finally 不会执行，所以挂在 exit 上清理。
