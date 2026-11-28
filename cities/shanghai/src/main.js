@@ -146,7 +146,7 @@ document.querySelector("#app").innerHTML = `
         <p>这一部分待上海组织者补充：</p>
         <ul>
           <li>上海社区介绍：我们是谁，在做什么</li>
-          <li>主理人和核心成员</li>
+          <li>组织者和核心成员</li>
           <li>加入方式，例如社群二维码</li>
         </ul>
         <p>想一起建设上海站？<a href="https://waytoagi.feishu.cn/share/base/shrcnmnSw2TcSattSyG0KsmasUg" target="_blank" rel="noopener">申请成为城市组织者 ↗</a></p>
